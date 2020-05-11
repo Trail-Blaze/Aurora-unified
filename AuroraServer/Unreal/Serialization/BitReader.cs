@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AuroraServer.Unreal.Serialization
 {
-    class FBitReader
+    class FBitReader : FArchive
     {
         private byte[] _buffer;
 
@@ -13,6 +13,8 @@ namespace AuroraServer.Unreal.Serialization
         public FBitReader(byte[] source, long count)
         {
             _buffer = new byte[(count + 7) >> 3];
+
+            IsLoading = IsPersistent = true;
 
             _count = count;
             _position = 0;

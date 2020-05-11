@@ -4,12 +4,12 @@
 
 class VehHook {
 public:
-	static bool Run(uintptr_t pTarget, uintptr_t pDetour);
+	static bool Run(uintptr_t lpTarget, uintptr_t lpDetour);
 	static bool Unhook();
 
 private:
-	static uintptr_t pTarget;
-	static uintptr_t pDetour;
+	static uintptr_t lpTarget;
+	static uintptr_t lpDetour;
 
 	static PVOID hHandle;
 	static DWORD dwProtect;

@@ -7,57 +7,62 @@ using System.Text.RegularExpressions;
 
 namespace AuroraLauncher
 {
-    public class Program
+    class Program
     {
-        private static Process _clientProcess;
+        #region Field Region
 
-        private static byte _clientAnticheat; // 0 = None, 1 = BattlEye, 2 = EasyAntiCheat
+        static Process _clientProcess;
+        /// <summary>
+        /// 0 = None, 1 = BattlEye, 2 = EasyAntiCheat
+        /// </summary>
+        static byte _clientAnticheat;
 
-#if !NATIVE
-        private static Win32.HandlerRoutine _handlerRoutine;
-#endif
+        #endregion
 
-        private static void Main(string[] args)
+        #region Method Region
+
+        static void Main(string[] args)
         {
-            string formattedArgs = string.Join(" ", args);
-
-#if !NATIVE
-            // Check if -CONSOLE exists in args (regardless of case) to enable/allocate console.
-            if (formattedArgs.ToUpper().Contains("-CONSOLE"))
-            {
-                formattedArgs = Regex.Replace(formattedArgs, "-CONSOLE", string.Empty, RegexOptions.IgnoreCase);
-
-                Win32.AllocConsole();
-            }
-#endif
+            var formattedArguments = string.Join(" ", args);
 
             // Check if -FORCEBE exists in args (regardless of case) to force BattlEye.
-            if (formattedArgs.ToUpper().Contains("-FORCEBE"))
+            if (formattedArguments.ToUpper().Contains("-FORCEBE"))
             {
-                formattedArgs = Regex.Replace(formattedArgs, "-FORCEBE", string.Empty, RegexOptions.IgnoreCase);
+                formattedArguments = Regex.Replace(formattedArguments, "-FORCEBE", string.Empty, RegexOptions.IgnoreCase);
 
                 _clientAnticheat = 1;
             }
 
             // Check if -FORCEEAC exists in args (regardless of case) to force EasyAntiCheat.
-            if (formattedArgs.ToUpper().Contains("-FORCEEAC"))
+            if (formattedArguments.ToUpper().Contains("-FORCEEAC"))
             {
-                formattedArgs = Regex.Replace(formattedArgs, "-FORCEEAC", string.Empty, RegexOptions.IgnoreCase);
+                formattedArguments = Regex.Replace(formattedArguments, "-FORCEEAC", string.Empty, RegexOptions.IgnoreCase);
 
                 _clientAnticheat = 2;
             }
 
+            if (_clientAnticheat == 0) // None
+                formattedArguments += $" {Configuration.ClientArguments} -noeac -nobe -fltoken=none";
+            else if (_clientAnticheat == 1) // BattlEye
+                formattedArguments += $" {Configuration.ClientArguments} -noeac -fromfl=be -fltoken={Configuration.BEToken}";
+            else if (_clientAnticheat == 2) // EasyAntiCheat
+                formattedArguments += $" {Configuration.ClientArguments} -nobe -fromfl=eac -fltoken={Configuration.EACToken}";
+
+#if !NATIVE
+            Win32.AllocConsole();
+#endif
+
             // Check if the client exists in the current work path, if it doesn't, just exit.
             if (!File.Exists(Configuration.ClientExecutable))
             {
+#if NATIVE
                 Win32.AllocConsole();
+#endif
 
                 Console.ForegroundColor = ConsoleColor.Red;
-
-                Console.WriteLine($"{Configuration.ClientExecutable} was not found, please make sure it exists.");
-                Console.ReadKey();
-
+                Console.WriteLine($"\"{Configuration.ClientExecutable}\" was not found, please make sure it exists.");
                 Console.ForegroundColor = ConsoleColor.Gray;
+                Console.ReadKey();
 
                 return;
             }
@@ -69,79 +74,62 @@ namespace AuroraLauncher
                 Win32.AllocConsole();
 
                 Console.ForegroundColor = ConsoleColor.Red;
-
-                Console.WriteLine($"{Configuration.ClientNative} was not found, please make sure it exists.");
-                Console.ReadKey();
-
+                Console.WriteLine($"\"{Configuration.ClientNative}\" was not found, please make sure it exists.");
                 Console.ForegroundColor = ConsoleColor.Gray;
+                Console.ReadKey();
 
                 return;
             }
 #endif
 
 #if !NATIVE
-            // Print message.
             Console.ForegroundColor = ConsoleColor.Green;
-
             Console.WriteLine("AuroraLauncher by Cyuubi");
-
             Console.ForegroundColor = ConsoleColor.Gray;
 #endif
 
-            // Initialize client process with start info.
             _clientProcess = new Process
             {
-                StartInfo =
+                StartInfo = new ProcessStartInfo(Configuration.ClientExecutable, formattedArguments)
                 {
-                    FileName = Configuration.ClientExecutable,
-                    Arguments = formattedArgs,
+                    UseShellExecute = false,
 
                     RedirectStandardOutput = true,
-                    UseShellExecute = false,
+
                     CreateNoWindow = false
                 }
             };
 
-            if (_clientAnticheat == 0) // None
-                _clientProcess.StartInfo.Arguments += $" {Configuration.ClientArguments} -noeac -nobe -fltoken=none";
-            else if (_clientAnticheat == 1) // BattlEye
-                _clientProcess.StartInfo.Arguments += $" {Configuration.ClientArguments} -noeac -fromfl=be -fltoken={Configuration.BEToken}";
-            else if (_clientAnticheat == 2) // EasyAntiCheat
-                _clientProcess.StartInfo.Arguments += $" {Configuration.ClientArguments} -nobe -fromfl=eac -fltoken={Configuration.EACToken}";
-
 #if !NO_EGL
-            SwapLauncher();
+            Swap(); // Swap the launcher, to prevent Fortnite from detecting it.
 #endif
 
             _clientProcess.Start();
 
 #if !NATIVE
-            // Setup our console HandlerRoutine.
-            _handlerRoutine = new Win32.HandlerRoutine(HandlerRoutineCallback);
+            // Setup a HandlerRoutine, for detecting when the console closes.
+            Win32.SetConsoleCtrlHandler(new Win32.HandlerRoutine(Routine), true);
 
-            Win32.SetConsoleCtrlHandler(_handlerRoutine, true);
+            // Setup an AsyncStreamReader, for standard output.
+            var reader = new AsyncStreamReader(_clientProcess.StandardOutput);
 
-            // Setup an AsyncStreamReader for standard output.
-            AsyncStreamReader asyncOutputReader = new AsyncStreamReader(_clientProcess.StandardOutput);
-
-            asyncOutputReader.DataReceived += delegate (object sender, string data)
+            reader.ValueRecieved += delegate (object sender, string value)
             {
                 Console.ForegroundColor = ConsoleColor.White;
-
-                Console.Write(data);
-
+                Console.Write(value);
                 Console.ForegroundColor = ConsoleColor.Gray;
             };
 
-            asyncOutputReader.Start();
+            reader.Start();
 #else
-            IntPtr clientHandle = Win32.OpenProcess(Win32.PROCESS_CREATE_THREAD | Win32.PROCESS_QUERY_INFORMATION |
+            var clientHandle = Win32.OpenProcess(Win32.PROCESS_CREATE_THREAD | Win32.PROCESS_QUERY_INFORMATION |
                 Win32.PROCESS_VM_OPERATION | Win32.PROCESS_VM_WRITE | Win32.PROCESS_VM_READ, false, _clientProcess.Id);
 
-            IntPtr loadLibraryA = Win32.GetProcAddress(Win32.GetModuleHandle("kernel32.dll"), "LoadLibraryA");
+            var loadLibraryA = Win32.GetProcAddress(Win32.GetModuleHandle("kernel32.dll"), "LoadLibraryA");
 
-            uint size = (uint)((Configuration.ClientNative.Length + 1) * Marshal.SizeOf(typeof(char)));
-            IntPtr address = Win32.VirtualAllocEx(clientHandle, IntPtr.Zero, size, Win32.MEM_COMMIT | Win32.MEM_RESERVE, Win32.PAGE_READWRITE);
+            var size = (uint)((Configuration.ClientNative.Length + 1) * Marshal.SizeOf(typeof(char)));
+            var address = Win32.VirtualAllocEx(clientHandle, IntPtr.Zero,
+                size, Win32.MEM_COMMIT | Win32.MEM_RESERVE, Win32.PAGE_READWRITE);
 
             Win32.WriteProcessMemory(clientHandle, address,
                 Encoding.Default.GetBytes(Configuration.ClientNative), size, out UIntPtr bytesWritten);
@@ -149,34 +137,31 @@ namespace AuroraLauncher
             Win32.CreateRemoteThread(clientHandle, IntPtr.Zero, 0, loadLibraryA, address, 0, IntPtr.Zero);
 #endif
 
-            _clientProcess.WaitForExit(); // We'll wait for the client process to exit, otherwise our launcher will just close instantly.
+            _clientProcess.WaitForExit(); // Wait for the client process to exit.
 
 #if !NO_EGL
-            SwapLauncher();
+            Swap(); // Before exiting... Swap the launcher, again.
 #endif
         }
 
-#if !NO_EGL
-        private static void SwapLauncher()
+        static void Swap()
         {
-            // Swap to original launcher.
+            // Custom -> Original
             if (File.Exists("FortniteLauncher.exe.original"))
             {
                 File.Move("FortniteLauncher.exe", "FortniteLauncher.exe.custom");
                 File.Move("FortniteLauncher.exe.original", "FortniteLauncher.exe");
             }
 
-            // Swap to custom launcher.
+            // Original -> Custom
             if (File.Exists("FortniteLauncher.exe.custom"))
             {
                 File.Move("FortniteLauncher.exe", "FortniteLauncher.exe.original");
                 File.Move("FortniteLauncher.exe.custom", "FortniteLauncher.exe");
             }
         }
-#endif
 
-#if !NATIVE
-        private static bool HandlerRoutineCallback(int dwCtrlType)
+        static bool Routine(int dwCtrlType)
         {
             switch (dwCtrlType)
             {
@@ -191,6 +176,7 @@ namespace AuroraLauncher
 
             return false;
         }
-#endif
+
+        #endregion
     }
 }

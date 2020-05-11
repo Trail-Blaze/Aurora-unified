@@ -1,22 +1,24 @@
 #include "pch.h"
 
-uintptr_t VehHook::pTarget = 0;
-uintptr_t VehHook::pDetour = 0;
+#define XIP Rip
+
+uintptr_t VehHook::lpTarget = 0;
+uintptr_t VehHook::lpDetour = 0;
 
 PVOID VehHook::hHandle = nullptr;
 DWORD VehHook::dwProtect = 0;
 
-bool VehHook::Run(uintptr_t pTarget, uintptr_t pDetour)
+bool VehHook::Run(uintptr_t lpTarget, uintptr_t lpDetour)
 {
-	VehHook::pTarget = pTarget;
-	VehHook::pDetour = pDetour;
+	VehHook::lpTarget = lpTarget;
+	VehHook::lpDetour = lpDetour;
 
-	if (IsSamePage((const uint8_t*)pTarget, (const uint8_t*)pDetour))
+	if (IsSamePage((const uint8_t*)lpTarget, (const uint8_t*)lpDetour))
 		return false;
 
 	hHandle = AddVectoredExceptionHandler(true, (PVECTORED_EXCEPTION_HANDLER)Handler);
 
-	if (hHandle && VirtualProtect((LPVOID)pTarget, 1, PAGE_EXECUTE_READ | PAGE_GUARD, &dwProtect))
+	if (hHandle && VirtualProtect((LPVOID)lpTarget, 1, PAGE_EXECUTE_READ | PAGE_GUARD, &dwProtect))
 		return true;
 
 	return false;
@@ -26,7 +28,7 @@ bool VehHook::Unhook()
 {
 	DWORD dwOldProtect;
 
-	if (hHandle && VirtualProtect((LPVOID)pTarget, 1, dwProtect, &dwOldProtect) && RemoveVectoredExceptionHandler(hHandle))
+	if (hHandle && VirtualProtect((LPVOID)lpTarget, 1, dwProtect, &dwOldProtect) && RemoveVectoredExceptionHandler(hHandle))
 		return true;
 
 	return false;
@@ -36,8 +38,8 @@ LONG WINAPI VehHook::Handler(EXCEPTION_POINTERS* pExceptionInfo)
 {
 	if (pExceptionInfo->ExceptionRecord->ExceptionCode == STATUS_GUARD_PAGE_VIOLATION)
 	{
-		if (pExceptionInfo->ContextRecord->XIP == (uintptr_t)pTarget)
-			pExceptionInfo->ContextRecord->XIP = (uintptr_t)pDetour;
+		if (pExceptionInfo->ContextRecord->XIP == (uintptr_t)lpTarget)
+			pExceptionInfo->ContextRecord->XIP = (uintptr_t)lpDetour;
 
 		pExceptionInfo->ContextRecord->EFlags |= 0x100;
 
@@ -48,7 +50,7 @@ LONG WINAPI VehHook::Handler(EXCEPTION_POINTERS* pExceptionInfo)
 	{
 		DWORD dwOldProtect;
 
-		VirtualProtect((LPVOID)pTarget, 1, PAGE_EXECUTE_READ | PAGE_GUARD, &dwOldProtect);
+		VirtualProtect((LPVOID)lpTarget, 1, PAGE_EXECUTE_READ | PAGE_GUARD, &dwOldProtect);
 
 		return EXCEPTION_CONTINUE_EXECUTION;
 	}

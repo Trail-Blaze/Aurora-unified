@@ -1,16 +1,43 @@
 ﻿using System;
 using System.IO;
 
-public class AsyncStreamReader
+class AsyncStreamReader
 {
-    public event EventHandler<string> DataReceived;
+    #region Field Region
+
+    private StreamReader _reader;
+    protected readonly byte[] _buffer;
+
+    public event EventHandler<string> ValueRecieved;
+
+    #endregion
+
+    #region Property Region
 
     public bool Active { get; private set; }
+
+    #endregion
+
+    #region Constructor Region
 
     public AsyncStreamReader(StreamReader reader)
     {
         _reader = reader;
+        _buffer = new byte[0x1000];
+
         Active = false;
+    }
+
+    #endregion
+
+    #region Method Region
+
+    public delegate void EventHandler<Args>(object sender, string value);
+
+    protected void Begin()
+    {
+        if (Active)
+            _reader.BaseStream.BeginRead(_buffer, 0, _buffer.Length, new AsyncCallback(Read), null);
     }
 
     public void Start()
@@ -18,42 +45,28 @@ public class AsyncStreamReader
         if (!Active)
         {
             Active = true;
-            BeginReadAsync();
+
+            Begin();
         }
     }
 
-    public void Stop()
+    public void Stop() => Active = false;
+
+    private void Read(IAsyncResult result)
     {
-        Active = false;
+        if (_reader != null)
+        {
+            int count = _reader.BaseStream.EndRead(result);
+            string value = null;
+
+            if (count > 0) value = _reader.CurrentEncoding.GetString(_buffer, 0, count);
+            else Active = false;
+
+            ValueRecieved?.Invoke(this, value);
+
+            Begin();
+        }
     }
 
-    protected void BeginReadAsync()
-    {
-        if (Active)
-            _reader.BaseStream.BeginRead(_buffer, 0, _buffer.Length, new AsyncCallback(ReadCallback), null);
-    }
-
-    private void ReadCallback(IAsyncResult asyncResult)
-    {
-        if (_reader == null)
-            return;
-
-        int num = _reader.BaseStream.EndRead(asyncResult);
-        string data = null;
-
-        if (num > 0)
-            data = _reader.CurrentEncoding.GetString(_buffer, 0, num);
-        else
-            Active = false;
-
-        DataReceived?.Invoke(this, data);
-
-        BeginReadAsync();
-    }
-
-    protected readonly byte[] _buffer = new byte[4096];
-
-    private StreamReader _reader;
-
-    public delegate void EventHandler<args>(object sender, string data);
+    #endregion
 }

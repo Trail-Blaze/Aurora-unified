@@ -408,7 +408,7 @@ struct curl_sockaddr {
   unsigned int addrlen; /* addrlen was a socklen_t type before 7.18.0 but it
                            turned really ugly and painful on the systems that
                            lack this type */
-  struct sockaddr addr;
+  struct sockaddr address;
 };
 
 typedef curl_socket_t

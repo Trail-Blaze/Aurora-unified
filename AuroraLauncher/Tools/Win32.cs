@@ -1,10 +1,34 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-public static class Win32
+class Win32
 {
+    #region Field Region
+
+    public const int PROCESS_CREATE_THREAD = 2;
+
+    public const int PROCESS_VM_OPERATION = 8;
+    public const int PROCESS_VM_WRITE = 0x0020;
+    public const int PROCESS_VM_READ = 0x0010;
+
+    public const int PROCESS_QUERY_INFORMATION = 0x0400;
+
+    public const uint PAGE_READWRITE = 4;
+
+    public const uint MEM_COMMIT = 0x1000;
+    public const uint MEM_RESERVE = 0x2000;
+
+    #endregion
+
+    #region Method Region
+
     [DllImport("kernel32.dll", SetLastError = true)]
     public static extern bool AllocConsole();
+
+    public delegate bool HandlerRoutine(int dwCtrlType);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    public static extern bool SetConsoleCtrlHandler(HandlerRoutine HandlerRoutine, bool Add);
 
     [DllImport("kernel32.dll")]
     public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
@@ -28,22 +52,5 @@ public static class Win32
         uint dwStackSize, IntPtr lpStartAddress,
         IntPtr lpParameter, uint dwCreationFlags, IntPtr lpThreadId);
 
-    // Privileges.
-    public const int PROCESS_CREATE_THREAD = 0x0002;
-    public const int PROCESS_QUERY_INFORMATION = 0x0400;
-    public const int PROCESS_VM_OPERATION = 0x0008;
-    public const int PROCESS_VM_WRITE = 0x0020;
-    public const int PROCESS_VM_READ = 0x0010;
-
-    // Used for memory allocation.
-    public const uint MEM_COMMIT = 0x00001000;
-    public const uint MEM_RESERVE = 0x00002000;
-    public const uint PAGE_READWRITE = 4;
-
-#if !NATIVE
-    public delegate bool HandlerRoutine(int dwCtrlType);
-
-    [DllImport("kernel32.dll", SetLastError = true)]
-    public static extern bool SetConsoleCtrlHandler(HandlerRoutine HandlerRoutine, bool Add);
-#endif
+    #endregion
 }

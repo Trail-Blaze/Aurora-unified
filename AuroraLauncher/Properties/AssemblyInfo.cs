@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ProjectAurora Launcher")]
+[assembly: AssemblyTitle("Aurora Launcher")]
 [assembly: AssemblyDescription("Drop into Aurora for a custom Fortnite experience!")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ProjectAurora Launcher")]
+[assembly: AssemblyProduct("Aurora Launcher")]
 [assembly: AssemblyCopyright("Copyright © Cyuubi 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
