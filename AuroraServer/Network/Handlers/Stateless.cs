@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-// todo: will probably need to be cleaned up before rls
+// todo: will probably need to be cleaned up before release
 namespace AuroraServer.Network.Handlers
 {
     class Stateless
