@@ -4,6 +4,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace AuroraLauncher
 {
@@ -21,8 +22,16 @@ namespace AuroraLauncher
 
         #region Method Region
 
+#if GUI
+        [STAThread]
+#endif // GUI
         static void Main(string[] args)
         {
+#if GUI
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new GUI());
+#else
             var formattedArguments = string.Join(" ", args);
 
             // Check if -FORCEBE exists in args (regardless of case) to force BattlEye.
@@ -50,14 +59,14 @@ namespace AuroraLauncher
 
 #if !NATIVE
             Win32.AllocConsole();
-#endif
+#endif // NATIVE
 
             // Check if the client exists in the current work path, if it doesn't, just exit.
             if (!File.Exists(Configuration.ClientExecutable))
             {
 #if NATIVE
                 Win32.AllocConsole();
-#endif
+#endif // NATIVE
 
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"\"{Configuration.ClientExecutable}\" was not found, please make sure it exists.");
@@ -80,13 +89,13 @@ namespace AuroraLauncher
 
                 return;
             }
-#endif
+#endif // NATIVE
 
 #if !NATIVE
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("AuroraLauncher by Cyuubi");
             Console.ForegroundColor = ConsoleColor.Gray;
-#endif
+#endif // NATIVE
 
             _clientProcess = new Process
             {
@@ -102,7 +111,7 @@ namespace AuroraLauncher
 
 #if !NO_EGL
             Swap(); // Swap the launcher, to prevent Fortnite from detecting it.
-#endif
+#endif // NO_EGL
 
             _clientProcess.Start();
 
@@ -125,7 +134,7 @@ namespace AuroraLauncher
             var clientHandle = Win32.OpenProcess(Win32.PROCESS_CREATE_THREAD | Win32.PROCESS_QUERY_INFORMATION |
                 Win32.PROCESS_VM_OPERATION | Win32.PROCESS_VM_WRITE | Win32.PROCESS_VM_READ, false, _clientProcess.Id);
 
-            var loadLibraryA = Win32.GetProcAddress(Win32.GetModuleHandle("kernel32.dll"), "LoadLibraryA");
+            var loadLibrary = Win32.GetProcAddress(Win32.GetModuleHandle("kernel32.dll"), "LoadLibraryA");
 
             var size = (uint)((Configuration.ClientNative.Length + 1) * Marshal.SizeOf(typeof(char)));
             var address = Win32.VirtualAllocEx(clientHandle, IntPtr.Zero,
@@ -134,14 +143,15 @@ namespace AuroraLauncher
             Win32.WriteProcessMemory(clientHandle, address,
                 Encoding.Default.GetBytes(Configuration.ClientNative), size, out UIntPtr bytesWritten);
 
-            Win32.CreateRemoteThread(clientHandle, IntPtr.Zero, 0, loadLibraryA, address, 0, IntPtr.Zero);
-#endif
+            Win32.CreateRemoteThread(clientHandle, IntPtr.Zero, 0, loadLibrary, address, 0, IntPtr.Zero);
+#endif // NATIVE
 
             _clientProcess.WaitForExit(); // Wait for the client process to exit.
 
 #if !NO_EGL
             Swap(); // Before exiting... Swap the launcher, again.
-#endif
+#endif // NO_EGL
+#endif // GUI
         }
 
         static void Swap()
@@ -177,6 +187,6 @@ namespace AuroraLauncher
             return false;
         }
 
-        #endregion
+#endregion
     }
 }

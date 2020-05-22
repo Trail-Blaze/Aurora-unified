@@ -1,16 +1,19 @@
 #pragma once
 
-//#define WIN32_LEAN_AND_MEAN
+#include "build.h"
+
 #include <Windows.h>
+#include <inttypes.h>
+#include <psapi.h>
 
 #include <iostream>
 #include <sstream>
 #include <string>
 
-#include <inttypes.h>
-#include <psapi.h>
+#include "base64.h"
 
-#include "curl.h" // TODO: Should be cURL 7.55.1, I'll fix this sometime. (Or, never.)
+#include "curl.h"
+#include "url.hpp"
 
 #include <MinHook.h>
 #pragma comment(lib, "minhook.lib")

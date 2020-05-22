@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Aurora Launcher")]
-[assembly: AssemblyDescription("Drop into Aurora for a custom Fortnite experience!")]
+[assembly: AssemblyDescription("Use Aurora for a custom Fortnite experience!")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Aurora Launcher")]
