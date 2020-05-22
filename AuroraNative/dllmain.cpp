@@ -3,11 +3,6 @@
 CURLcode (*Curl_setopt)(struct Curl_easy*, CURLoption, va_list) = nullptr;
 
 CURLcode Curl_setopt_detour(struct Curl_easy* data, CURLoption option, va_list param) {
-    switch (option) {
-    case CURLOPT_URL:
-        break;
-    }
-
     return Curl_setopt(data, option, param);
 }
 
