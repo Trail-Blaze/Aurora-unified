@@ -2,60 +2,13 @@
 
 CURLcode (*Curl_setopt)(struct Curl_easy*, CURLoption, va_list) = nullptr;
 
+// Thanks to Eldor for helping me!
 CURLcode Curl_setopt_detour(struct Curl_easy* data, CURLoption option, va_list param) {
+    std::string url;
+
     switch (option) {
     case CURLOPT_URL:
-        break;
-    }
-
-    return Curl_setopt(data, option, param);
-}
-
-CURLcode Curl_setopt_va(struct Curl_easy* data, CURLoption option, ...) {
-    va_list arg, arg_copy;
-
-    CURLcode result;
-
-    va_start(arg, option);
-
-    result = Curl_setopt_detour(data, option, arg);
-
-    va_end(arg);
-
-    return result;
-}
-
-CURLcode (*curl_easy_setopt)(struct Curl_easy*, CURLoption, ...) = nullptr;
-
-CURLcode curl_easy_setopt_detour(struct Curl_easy* data, CURLoption tag, ...) {
-    va_list arg, arg_copy;
-
-    CURLcode result;
-
-    if (!data)
-        return CURLE_BAD_FUNCTION_ARGUMENT;
-
-    va_start(arg, tag);
-
-    /*HKEY hKey = NULL;
-    LONG lRes = RegOpenKeyExW(HKEY_CURRENT_USER, L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Internet", 0, KEY_READ, &hKey);
-
-    if (lRes == ERROR_SUCCESS) {
-        bool dwProxyEnable = false;
-
-        GetBoolRegKey(hKey, L"ProxyEnable", dwProxyEnable, false);
-
-        if (dwProxyEnable)
-            exit(ERROR_INVALID_ADDRESS);
-    }
-
-    RegCloseKey(hKey);*/
-
-    if (tag == CURLOPT_URL) {
-        va_copy(arg_copy, arg);
-
-        std::string url(va_arg(arg_copy, char*));
-        size_t length = url.length();
+        url = std::string(reinterpret_cast<char*>(param));
 
         if (url.find(".epicgames.com") != std::string::npos) {
             Url redirect(url);
@@ -70,32 +23,19 @@ CURLcode curl_easy_setopt_detour(struct Curl_easy* data, CURLoption tag, ...) {
             url = redirect.str();
         }
 
-        // Add padding.
-        for (size_t index = url.length(); index < length; index++)
-            url = url + " ";
-
-        //printf("curl_easy_setopt (va): tag = %i, url = %s\n", tag, url.c_str());
-
-        result = Curl_setopt_va(data, tag, url.c_str());
-
-        va_end(arg_copy);
-#ifdef DISABLE_PINNING
-    } else if (tag == CURLOPT_SSL_VERIFYPEER) {
-        //printf("curl_easy_setopt (va): tag = %i\n", tag);
-
-        result = Curl_setopt_va(data, tag, false);
-#endif // DISABLE_PINNING
-    } else {
-        //printf("curl_easy_setopt (detour): tag = %i\n", tag);
-
-        result = Curl_setopt_detour(data, tag, arg);
+        param = reinterpret_cast<va_list>((char*)url.c_str());
+        break;
+    case CURLOPT_USE_SSL:
+        param = reinterpret_cast<va_list>(1L);
+        break;
+    case CURLOPT_SSL_VERIFYPEER:
+        param = reinterpret_cast<va_list>(0L);
+        break;
     }
 
-    //printf("Curl_setopt: result = %i\n", result);
+    auto result = Curl_setopt(data, option, param);
 
-    va_end(arg);
-
-	return result;
+    return result;
 }
 
 BOOL bVehHook = true;
@@ -161,7 +101,6 @@ VOID Main() {
         return;
     }
 
-    // CurlEasySetopt = 89 54 24 10 4C 89 44 24 18 4C 89 4C 24 20 48 83 EC 28 48 85 C9 75 08 8D 41 2B 48 83 C4 28 C3 4C
     // CurlSetopt = 48 89 5C 24 08 48 89 6C 24 10 48 89 74 24 18 57 48 83 EC 30 33 ED 49 8B F0 48 8B D9
 
 #ifdef FDEV
@@ -169,20 +108,6 @@ VOID Main() {
 
     GetModuleInformation(GetCurrentProcess(), GetModuleHandle(0), &info, sizeof(info));
 #endif
-
-#ifdef FDEV
-    auto lpCurlEasySetoptAddress = reinterpret_cast<PBYTE>(info.lpBaseOfDll) + 0x54C9BD0;
-#else
-    auto lpCurlEasySetoptAddress = FindPattern("\x89\x54\x24\x10\x4C\x89\x44\x24\x18\x4C\x89\x4C\x24\x20\x48\x83\xEC\x28\x48\x85\xC9\x75\x08\x8D\x41\x2B\x48\x83\xC4\x28\xC3\x4C", "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-    if (!lpCurlEasySetoptAddress) {
-        printf("Finding pattern for CurlEasySetopt has failed, bailing-out immediately!");
-        return;
-    }
-#endif
-
-#ifdef VERBOSE
-    printf("lpCurlEasySetoptAddress: %" PRIXPTR "\n", lpCurlEasySetoptAddress);
-#endif // VERBOSE
 
 #ifdef FDEV
     auto lpCurlSetoptAddress = reinterpret_cast<PBYTE>(info.lpBaseOfDll) + 0x54D8F10;
@@ -198,16 +123,14 @@ VOID Main() {
     printf("lpCurlSetoptAddress: %" PRIXPTR "\n\n", lpCurlSetoptAddress);
 #endif // VERBOSE
 
-    LPVOID lpCurlEasySetopt = reinterpret_cast<LPVOID>(lpCurlEasySetoptAddress);
     LPVOID lpCurlSetopt = reinterpret_cast<LPVOID>(lpCurlSetoptAddress);
 
     // TODO: Add checks for hooks.
 
-    //MH_CreateHook(lpCurlEasySetopt, curl_easy_setopt_detour, reinterpret_cast<LPVOID*>(&curl_easy_setopt));
-    EnableHook(lpCurlEasySetopt, curl_easy_setopt_detour);
+    //MH_CreateHook(lpCurlSetopt, Curl_setopt_detour, reinterpret_cast<LPVOID*>(&Curl_setopt));
+    Curl_setopt = reinterpret_cast<decltype(Curl_setopt)>(lpCurlSetopt);
 
-    MH_CreateHook(lpCurlSetopt, Curl_setopt_detour, reinterpret_cast<LPVOID*>(&Curl_setopt));
-    //EnableHook(lpCurlSetopt, Curl_setopt_detour_list);
+    EnableHook(lpCurlSetopt, Curl_setopt_detour);
 }
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved) {
