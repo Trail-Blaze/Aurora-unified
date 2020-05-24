@@ -40,9 +40,7 @@ namespace AuroraLauncher
             InitializeComponent();
 
 #if FDEV
-            Text += " (for Fortnite.Dev)";
-
-            textBoxUsername.Text = "Ninja";
+            Text += " (built for FDev)";
 
             linkLabelDiscord.Text = "Join our Discord.";
             linkLabelDiscord.Visible = true;
@@ -65,7 +63,7 @@ namespace AuroraLauncher
         private void linkLabelDiscord_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
 #if FDEV
-            Process.Start("https://discord.gg/ZKjrU3P");
+            Process.Start("https://discord.gg/fdev");
 #endif
         }
 
@@ -92,6 +90,8 @@ namespace AuroraLauncher
                 MessageBox.Show("Username cannot be empty or below 3 characters.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+            textBoxUsername.Text = Regex.Replace(textBoxUsername.Text, "[^a-zA-Z0-9_.]+", string.Empty, RegexOptions.Compiled);
 
             // Sigh...
             try
@@ -126,9 +126,7 @@ namespace AuroraLauncher
 
             var formattedArguments = $"-AUTH_LOGIN=\"{textBoxUsername.Text}@unused.com\" -AUTH_PASSWORD=unused -AUTH_TYPE=epic";
 
-#if FDEV
-            _clientAnticheat = 2;
-#endif
+            _clientAnticheat = 2; // TODO: Add to launcher.
 
             if (_clientAnticheat == 0) // None
                 formattedArguments += $" {Configuration.ClientArguments} -noeac -nobe -fltoken=none";
@@ -170,6 +168,36 @@ namespace AuroraLauncher
         {
             if (folderBrowserDialogBrowse.ShowDialog() == DialogResult.OK)
                 textBoxFortnitePath.Text = folderBrowserDialogBrowse.SelectedPath;
+        }
+
+        private void GUI_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (_clientProcess != null)
+            {
+                if (!_clientProcess.HasExited)
+                {
+                    MessageBox.Show("You cannot close Aurora Launcher while Fortnite is running!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    e.Cancel = true;
+                }
+            }
+        }
+
+        private void buttonInfo_Click(object sender, EventArgs e)
+        {
+#if FDEV
+            string text = "Having problems using FDev? Make sure you follow these guidelines:\n" +
+                "- Your Fortnite is up-to-date.\n" +
+                "- Your username does not contain special characters.\n\n" +
+                "If you still seem to have problems, then please join our Discord server: https://discord.gg/fdev";
+
+            MessageBox.Show(text, "Info");
+#endif
+        }
+
+        private void GUI_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // TODO: Add Enter button support.
         }
     }
 }

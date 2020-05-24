@@ -7,7 +7,7 @@ CURLcode Curl_setopt_detour(struct Curl_easy* data, CURLoption option, va_list p
 }
 
 CURLcode Curl_setopt_va(struct Curl_easy* data, CURLoption option, ...) {
-    va_list arg, arg_copy;
+    va_list arg;
 
     CURLcode result;
 
@@ -56,10 +56,10 @@ CURLcode curl_easy_setopt_detour(struct Curl_easy* data, CURLoption tag, ...) {
             Url redirect(url);
 
 #ifdef LOCALHOST
-            redirect.scheme("http").host("localhost");
+            redirect.scheme("http").host("localhost").port(60101);
 #endif
 #ifdef FDEV
-            redirect.scheme("http").host("fortnite.dev");
+            redirect.scheme("http").host(base64_decode(FDEV_DOMAIN));
 #endif
 
             url = redirect.str();
@@ -159,35 +159,35 @@ VOID Main() {
     // CurlEasySetopt = 89 54 24 10 4C 89 44 24 18 4C 89 4C 24 20 48 83 EC 28 48 85 C9 75 08 8D 41 2B 48 83 C4 28 C3 4C
     // CurlSetopt = 48 89 5C 24 08 48 89 6C 24 10 48 89 74 24 18 57 48 83 EC 30 33 ED 49 8B F0 48 8B D9
 
-#ifdef FDEV
-    MODULEINFO info = { 0 };
+//#ifdef FDEV
+//    MODULEINFO info = { 0 };
+//
+//    GetModuleInformation(GetCurrentProcess(), GetModuleHandle(0), &info, sizeof(info));
+//#endif
 
-    GetModuleInformation(GetCurrentProcess(), GetModuleHandle(0), &info, sizeof(info));
-#endif
-
-#ifdef FDEV
-    auto lpCurlEasySetoptAddress = reinterpret_cast<PBYTE>(info.lpBaseOfDll) + 0x54C9BD0;
-#else
+//#ifdef FDEV
+//    auto lpCurlEasySetoptAddress = reinterpret_cast<PBYTE>(info.lpBaseOfDll) + 0x54C9BD0;
+//#else
     auto lpCurlEasySetoptAddress = FindPattern("\x89\x54\x24\x10\x4C\x89\x44\x24\x18\x4C\x89\x4C\x24\x20\x48\x83\xEC\x28\x48\x85\xC9\x75\x08\x8D\x41\x2B\x48\x83\xC4\x28\xC3\x4C", "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
     if (!lpCurlEasySetoptAddress) {
         printf("Finding pattern for CurlEasySetopt has failed, bailing-out immediately!");
         return;
     }
-#endif
+//#endif
 
 #ifdef VERBOSE
     printf("lpCurlEasySetoptAddress: %" PRIXPTR "\n", lpCurlEasySetoptAddress);
 #endif // VERBOSE
 
-#ifdef FDEV
-    auto lpCurlSetoptAddress = reinterpret_cast<PBYTE>(info.lpBaseOfDll) + 0x54D8F10;
-#else
+//#ifdef FDEV
+//    auto lpCurlSetoptAddress = reinterpret_cast<PBYTE>(info.lpBaseOfDll) + 0x54D8F10;
+//#else
     auto lpCurlSetoptAddress = FindPattern("\x48\x89\x5C\x24\x08\x48\x89\x6C\x24\x10\x48\x89\x74\x24\x18\x57\x48\x83\xEC\x30\x33\xED\x49\x8B\xF0\x48\x8B\xD9", "xxxxxxxxxxxxxxxxxxxxxxxxxxxx");
     if (!lpCurlSetoptAddress) {
         printf("Finding pattern for CurlSetopt has failed, bailing-out immediately!");
         return;
     }
-#endif
+//#endif
 
 #ifdef VERBOSE
     printf("lpCurlSetoptAddress: %" PRIXPTR "\n\n", lpCurlSetoptAddress);

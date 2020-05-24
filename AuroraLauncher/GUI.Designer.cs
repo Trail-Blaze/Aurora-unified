@@ -36,13 +36,14 @@
             this.linkLabelDiscord = new System.Windows.Forms.LinkLabel();
             this.buttonBrowse = new System.Windows.Forms.Button();
             this.folderBrowserDialogBrowse = new System.Windows.Forms.FolderBrowserDialog();
+            this.buttonInfo = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonLaunch
             // 
-            this.buttonLaunch.Location = new System.Drawing.Point(247, 76);
+            this.buttonLaunch.Location = new System.Drawing.Point(262, 79);
             this.buttonLaunch.Name = "buttonLaunch";
-            this.buttonLaunch.Size = new System.Drawing.Size(75, 23);
+            this.buttonLaunch.Size = new System.Drawing.Size(60, 20);
             this.buttonLaunch.TabIndex = 0;
             this.buttonLaunch.Text = "Launch";
             this.buttonLaunch.UseVisualStyleBackColor = true;
@@ -59,9 +60,9 @@
             // 
             // textBoxUsername
             // 
-            this.textBoxUsername.Location = new System.Drawing.Point(76, 12);
+            this.textBoxUsername.Location = new System.Drawing.Point(77, 12);
             this.textBoxUsername.Name = "textBoxUsername";
-            this.textBoxUsername.Size = new System.Drawing.Size(246, 20);
+            this.textBoxUsername.Size = new System.Drawing.Size(245, 20);
             this.textBoxUsername.TabIndex = 2;
             // 
             // labelFortnitePath
@@ -77,7 +78,7 @@
             // 
             this.textBoxFortnitePath.Location = new System.Drawing.Point(88, 39);
             this.textBoxFortnitePath.Name = "textBoxFortnitePath";
-            this.textBoxFortnitePath.Size = new System.Drawing.Size(202, 20);
+            this.textBoxFortnitePath.Size = new System.Drawing.Size(203, 20);
             this.textBoxFortnitePath.TabIndex = 4;
             // 
             // linkLabelDiscord
@@ -94,19 +95,30 @@
             // 
             // buttonBrowse
             // 
-            this.buttonBrowse.Location = new System.Drawing.Point(296, 38);
+            this.buttonBrowse.Location = new System.Drawing.Point(297, 39);
             this.buttonBrowse.Name = "buttonBrowse";
-            this.buttonBrowse.Size = new System.Drawing.Size(26, 23);
+            this.buttonBrowse.Size = new System.Drawing.Size(25, 20);
             this.buttonBrowse.TabIndex = 6;
             this.buttonBrowse.Text = "...";
             this.buttonBrowse.UseVisualStyleBackColor = true;
             this.buttonBrowse.Click += new System.EventHandler(this.buttonBrowse_Click);
+            // 
+            // buttonInfo
+            // 
+            this.buttonInfo.Location = new System.Drawing.Point(224, 79);
+            this.buttonInfo.Name = "buttonInfo";
+            this.buttonInfo.Size = new System.Drawing.Size(35, 20);
+            this.buttonInfo.TabIndex = 7;
+            this.buttonInfo.Text = "Info";
+            this.buttonInfo.UseVisualStyleBackColor = true;
+            this.buttonInfo.Click += new System.EventHandler(this.buttonInfo_Click);
             // 
             // GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(334, 111);
+            this.Controls.Add(this.buttonInfo);
             this.Controls.Add(this.buttonBrowse);
             this.Controls.Add(this.linkLabelDiscord);
             this.Controls.Add(this.textBoxFortnitePath);
@@ -115,8 +127,11 @@
             this.Controls.Add(this.labelUsername);
             this.Controls.Add(this.buttonLaunch);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Name = "GUI";
             this.Text = "Aurora Launcher";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GUI_FormClosing);
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.GUI_KeyPress);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -132,5 +147,6 @@
         private System.Windows.Forms.LinkLabel linkLabelDiscord;
         private System.Windows.Forms.Button buttonBrowse;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialogBrowse;
+        private System.Windows.Forms.Button buttonInfo;
     }
 }
