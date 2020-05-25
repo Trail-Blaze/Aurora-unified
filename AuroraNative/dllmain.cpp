@@ -49,8 +49,9 @@ CURLcode curl_easy_setopt_detour(struct Curl_easy* data, CURLoption tag, ...) {
     if (tag == CURLOPT_URL) {
         va_copy(arg_copy, arg);
 
-        std::string url(va_arg(arg_copy, char*));
-        size_t length = url.length();
+        char* pUrl = _strdup(va_arg(arg_copy, char*));
+
+        std::string url(pUrl);
 
         if (url.find(".epicgames.com") != std::string::npos) {
             Url redirect(url);
@@ -65,13 +66,11 @@ CURLcode curl_easy_setopt_detour(struct Curl_easy* data, CURLoption tag, ...) {
             url = redirect.str();
         }
 
-        // Add padding.
-        for (size_t index = url.length(); index < length; index++)
-            url = url + " ";
-
         //printf("curl_easy_setopt (va): tag = %i, url = %s\n", tag, url.c_str());
 
         result = Curl_setopt_va(data, tag, url.c_str());
+
+        free(pUrl);
 
         va_end(arg_copy);
 #ifdef DISABLE_PINNING

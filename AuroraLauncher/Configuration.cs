@@ -6,7 +6,7 @@
 #if !NO_EGL
         internal const string ClientArguments = "";
 #else
-        internal const string ClientArguments = "-epicapp=Fortnite -epicenv=Prod -epiclocale=en-us -epicportal";
+        internal const string ClientArguments = "-epicapp=Fortnite -epicenv=Prod -epiclocale=en-us -epicportal -nothreadtimeout";
 #endif
         internal const string ClientNative = "AuroraNative.dll";
 
