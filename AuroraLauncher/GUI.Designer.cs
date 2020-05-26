@@ -1,6 +1,6 @@
 ﻿namespace AuroraLauncher
 {
-    partial class GUI
+    partial class Gui
     {
         /// <summary>
         /// Required designer variable.
@@ -28,110 +28,178 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.buttonLaunch = new System.Windows.Forms.Button();
-            this.labelUsername = new System.Windows.Forms.Label();
-            this.textBoxUsername = new System.Windows.Forms.TextBox();
-            this.labelFortnitePath = new System.Windows.Forms.Label();
-            this.textBoxFortnitePath = new System.Windows.Forms.TextBox();
-            this.linkLabelDiscord = new System.Windows.Forms.LinkLabel();
-            this.buttonBrowse = new System.Windows.Forms.Button();
-            this.folderBrowserDialogBrowse = new System.Windows.Forms.FolderBrowserDialog();
-            this.buttonInfo = new System.Windows.Forms.Button();
+            this.materialFlatButtonSettings = new MaterialSkin.Controls.MaterialFlatButton();
+            this.materialRaisedButtonLaunch = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.materialLabelMadeWithLove = new MaterialSkin.Controls.MaterialLabel();
+            this.materialSingleLineTextFieldUsername = new MaterialSkin.Controls.MaterialSingleLineTextField();
+            this.materialSingleLineTextFieldPassword = new MaterialSkin.Controls.MaterialSingleLineTextField();
+            this.materialLabelPassword = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabelUsername = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabelUpdate = new MaterialSkin.Controls.MaterialLabel();
+            this.materialFlatButtonDiscord = new MaterialSkin.Controls.MaterialFlatButton();
+            this.pictureBoxDiscord = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDiscord)).BeginInit();
             this.SuspendLayout();
             // 
-            // buttonLaunch
+            // materialFlatButtonSettings
             // 
-            this.buttonLaunch.Location = new System.Drawing.Point(262, 79);
-            this.buttonLaunch.Name = "buttonLaunch";
-            this.buttonLaunch.Size = new System.Drawing.Size(60, 20);
-            this.buttonLaunch.TabIndex = 0;
-            this.buttonLaunch.Text = "Launch";
-            this.buttonLaunch.UseVisualStyleBackColor = true;
-            this.buttonLaunch.Click += new System.EventHandler(this.buttonLaunch_Click);
+            this.materialFlatButtonSettings.AutoSize = true;
+            this.materialFlatButtonSettings.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialFlatButtonSettings.Depth = 0;
+            this.materialFlatButtonSettings.Location = new System.Drawing.Point(451, 299);
+            this.materialFlatButtonSettings.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.materialFlatButtonSettings.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialFlatButtonSettings.Name = "materialFlatButtonSettings";
+            this.materialFlatButtonSettings.Primary = false;
+            this.materialFlatButtonSettings.Size = new System.Drawing.Size(76, 36);
+            this.materialFlatButtonSettings.TabIndex = 0;
+            this.materialFlatButtonSettings.Text = "Settings";
+            this.materialFlatButtonSettings.UseVisualStyleBackColor = true;
+            this.materialFlatButtonSettings.Click += new System.EventHandler(this.materialFlatButtonSettings_Click);
             // 
-            // labelUsername
+            // materialRaisedButtonLaunch
             // 
-            this.labelUsername.AutoSize = true;
-            this.labelUsername.Location = new System.Drawing.Point(12, 15);
-            this.labelUsername.Name = "labelUsername";
-            this.labelUsername.Size = new System.Drawing.Size(58, 13);
-            this.labelUsername.TabIndex = 1;
-            this.labelUsername.Text = "Username:";
+            this.materialRaisedButtonLaunch.Depth = 0;
+            this.materialRaisedButtonLaunch.Location = new System.Drawing.Point(12, 299);
+            this.materialRaisedButtonLaunch.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialRaisedButtonLaunch.Name = "materialRaisedButtonLaunch";
+            this.materialRaisedButtonLaunch.Primary = true;
+            this.materialRaisedButtonLaunch.Size = new System.Drawing.Size(76, 36);
+            this.materialRaisedButtonLaunch.TabIndex = 1;
+            this.materialRaisedButtonLaunch.Text = "Launch";
+            this.materialRaisedButtonLaunch.UseVisualStyleBackColor = true;
+            this.materialRaisedButtonLaunch.Click += new System.EventHandler(this.materialRaisedButtonLaunch_Click);
             // 
-            // textBoxUsername
+            // materialLabelMadeWithLove
             // 
-            this.textBoxUsername.Location = new System.Drawing.Point(77, 12);
-            this.textBoxUsername.Name = "textBoxUsername";
-            this.textBoxUsername.Size = new System.Drawing.Size(245, 20);
-            this.textBoxUsername.TabIndex = 2;
+            this.materialLabelMadeWithLove.AutoSize = true;
+            this.materialLabelMadeWithLove.Depth = 0;
+            this.materialLabelMadeWithLove.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabelMadeWithLove.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabelMadeWithLove.Location = new System.Drawing.Point(94, 307);
+            this.materialLabelMadeWithLove.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabelMadeWithLove.Name = "materialLabelMadeWithLove";
+            this.materialLabelMadeWithLove.Size = new System.Drawing.Size(166, 19);
+            this.materialLabelMadeWithLove.TabIndex = 2;
+            this.materialLabelMadeWithLove.Text = "Made with <3 by Cyuubi";
             // 
-            // labelFortnitePath
+            // materialSingleLineTextFieldUsername
             // 
-            this.labelFortnitePath.AutoSize = true;
-            this.labelFortnitePath.Location = new System.Drawing.Point(12, 42);
-            this.labelFortnitePath.Name = "labelFortnitePath";
-            this.labelFortnitePath.Size = new System.Drawing.Size(70, 13);
-            this.labelFortnitePath.TabIndex = 3;
-            this.labelFortnitePath.Text = "Fortnite Path:";
+            this.materialSingleLineTextFieldUsername.Depth = 0;
+            this.materialSingleLineTextFieldUsername.Hint = "Ninja";
+            this.materialSingleLineTextFieldUsername.Location = new System.Drawing.Point(99, 79);
+            this.materialSingleLineTextFieldUsername.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialSingleLineTextFieldUsername.Name = "materialSingleLineTextFieldUsername";
+            this.materialSingleLineTextFieldUsername.PasswordChar = '\0';
+            this.materialSingleLineTextFieldUsername.SelectedText = "";
+            this.materialSingleLineTextFieldUsername.SelectionLength = 0;
+            this.materialSingleLineTextFieldUsername.SelectionStart = 0;
+            this.materialSingleLineTextFieldUsername.Size = new System.Drawing.Size(429, 23);
+            this.materialSingleLineTextFieldUsername.TabIndex = 3;
+            this.materialSingleLineTextFieldUsername.UseSystemPasswordChar = false;
+            this.materialSingleLineTextFieldUsername.TextChanged += new System.EventHandler(this.materialSingleLineTextFieldUsername_TextChanged);
             // 
-            // textBoxFortnitePath
+            // materialSingleLineTextFieldPassword
             // 
-            this.textBoxFortnitePath.Location = new System.Drawing.Point(88, 39);
-            this.textBoxFortnitePath.Name = "textBoxFortnitePath";
-            this.textBoxFortnitePath.Size = new System.Drawing.Size(203, 20);
-            this.textBoxFortnitePath.TabIndex = 4;
+            this.materialSingleLineTextFieldPassword.Depth = 0;
+            this.materialSingleLineTextFieldPassword.Hint = "";
+            this.materialSingleLineTextFieldPassword.Location = new System.Drawing.Point(99, 108);
+            this.materialSingleLineTextFieldPassword.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialSingleLineTextFieldPassword.Name = "materialSingleLineTextFieldPassword";
+            this.materialSingleLineTextFieldPassword.PasswordChar = '\0';
+            this.materialSingleLineTextFieldPassword.SelectedText = "";
+            this.materialSingleLineTextFieldPassword.SelectionLength = 0;
+            this.materialSingleLineTextFieldPassword.SelectionStart = 0;
+            this.materialSingleLineTextFieldPassword.Size = new System.Drawing.Size(429, 23);
+            this.materialSingleLineTextFieldPassword.TabIndex = 6;
+            this.materialSingleLineTextFieldPassword.UseSystemPasswordChar = false;
             // 
-            // linkLabelDiscord
+            // materialLabelPassword
             // 
-            this.linkLabelDiscord.AutoSize = true;
-            this.linkLabelDiscord.Location = new System.Drawing.Point(13, 86);
-            this.linkLabelDiscord.Name = "linkLabelDiscord";
-            this.linkLabelDiscord.Size = new System.Drawing.Size(85, 13);
-            this.linkLabelDiscord.TabIndex = 5;
-            this.linkLabelDiscord.TabStop = true;
-            this.linkLabelDiscord.Text = "linkLabelDiscord";
-            this.linkLabelDiscord.Visible = false;
-            this.linkLabelDiscord.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelDiscord_LinkClicked);
+            this.materialLabelPassword.AutoSize = true;
+            this.materialLabelPassword.Depth = 0;
+            this.materialLabelPassword.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabelPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabelPassword.Location = new System.Drawing.Point(14, 112);
+            this.materialLabelPassword.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabelPassword.Name = "materialLabelPassword";
+            this.materialLabelPassword.Size = new System.Drawing.Size(79, 19);
+            this.materialLabelPassword.TabIndex = 5;
+            this.materialLabelPassword.Text = "Password:";
             // 
-            // buttonBrowse
+            // materialLabelUsername
             // 
-            this.buttonBrowse.Location = new System.Drawing.Point(297, 39);
-            this.buttonBrowse.Name = "buttonBrowse";
-            this.buttonBrowse.Size = new System.Drawing.Size(25, 20);
-            this.buttonBrowse.TabIndex = 6;
-            this.buttonBrowse.Text = "...";
-            this.buttonBrowse.UseVisualStyleBackColor = true;
-            this.buttonBrowse.Click += new System.EventHandler(this.buttonBrowse_Click);
+            this.materialLabelUsername.AutoSize = true;
+            this.materialLabelUsername.Depth = 0;
+            this.materialLabelUsername.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabelUsername.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabelUsername.Location = new System.Drawing.Point(12, 83);
+            this.materialLabelUsername.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabelUsername.Name = "materialLabelUsername";
+            this.materialLabelUsername.Size = new System.Drawing.Size(81, 19);
+            this.materialLabelUsername.TabIndex = 4;
+            this.materialLabelUsername.Text = "Username:";
             // 
-            // buttonInfo
+            // materialLabelUpdate
             // 
-            this.buttonInfo.Location = new System.Drawing.Point(224, 79);
-            this.buttonInfo.Name = "buttonInfo";
-            this.buttonInfo.Size = new System.Drawing.Size(35, 20);
-            this.buttonInfo.TabIndex = 7;
-            this.buttonInfo.Text = "Info";
-            this.buttonInfo.UseVisualStyleBackColor = true;
-            this.buttonInfo.Click += new System.EventHandler(this.buttonInfo_Click);
+            this.materialLabelUpdate.AutoSize = true;
+            this.materialLabelUpdate.Depth = 0;
+            this.materialLabelUpdate.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabelUpdate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabelUpdate.Location = new System.Drawing.Point(12, 150);
+            this.materialLabelUpdate.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabelUpdate.Name = "materialLabelUpdate";
+            this.materialLabelUpdate.Size = new System.Drawing.Size(147, 19);
+            this.materialLabelUpdate.TabIndex = 7;
+            this.materialLabelUpdate.Text = "materialLabelUpdate";
             // 
-            // GUI
+            // materialFlatButtonDiscord
+            // 
+            this.materialFlatButtonDiscord.AutoSize = true;
+            this.materialFlatButtonDiscord.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialFlatButtonDiscord.Depth = 0;
+            this.materialFlatButtonDiscord.Location = new System.Drawing.Point(459, 140);
+            this.materialFlatButtonDiscord.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.materialFlatButtonDiscord.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialFlatButtonDiscord.Name = "materialFlatButtonDiscord";
+            this.materialFlatButtonDiscord.Primary = false;
+            this.materialFlatButtonDiscord.Size = new System.Drawing.Size(69, 36);
+            this.materialFlatButtonDiscord.TabIndex = 8;
+            this.materialFlatButtonDiscord.Text = "Discord";
+            this.materialFlatButtonDiscord.UseVisualStyleBackColor = true;
+            this.materialFlatButtonDiscord.Click += new System.EventHandler(this.materialFlatButtonDiscord_Click);
+            // 
+            // pictureBoxDiscord
+            // 
+            this.pictureBoxDiscord.BackgroundImage = global::AuroraLauncher.Properties.Resources.Discord_Logo_Color;
+            this.pictureBoxDiscord.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBoxDiscord.Location = new System.Drawing.Point(412, 137);
+            this.pictureBoxDiscord.Name = "pictureBoxDiscord";
+            this.pictureBoxDiscord.Size = new System.Drawing.Size(40, 40);
+            this.pictureBoxDiscord.TabIndex = 9;
+            this.pictureBoxDiscord.TabStop = false;
+            this.pictureBoxDiscord.Click += new System.EventHandler(this.pictureBoxDiscord_Click);
+            // 
+            // Gui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(334, 111);
-            this.Controls.Add(this.buttonInfo);
-            this.Controls.Add(this.buttonBrowse);
-            this.Controls.Add(this.linkLabelDiscord);
-            this.Controls.Add(this.textBoxFortnitePath);
-            this.Controls.Add(this.labelFortnitePath);
-            this.Controls.Add(this.textBoxUsername);
-            this.Controls.Add(this.labelUsername);
-            this.Controls.Add(this.buttonLaunch);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.ClientSize = new System.Drawing.Size(540, 350);
+            this.Controls.Add(this.pictureBoxDiscord);
+            this.Controls.Add(this.materialFlatButtonDiscord);
+            this.Controls.Add(this.materialLabelUpdate);
+            this.Controls.Add(this.materialSingleLineTextFieldPassword);
+            this.Controls.Add(this.materialLabelPassword);
+            this.Controls.Add(this.materialLabelUsername);
+            this.Controls.Add(this.materialSingleLineTextFieldUsername);
+            this.Controls.Add(this.materialLabelMadeWithLove);
+            this.Controls.Add(this.materialRaisedButtonLaunch);
+            this.Controls.Add(this.materialFlatButtonSettings);
             this.MaximizeBox = false;
-            this.Name = "GUI";
+            this.Name = "Gui";
+            this.Sizable = false;
             this.Text = "Aurora Launcher";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GUI_FormClosing);
-            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.GUI_KeyPress);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDiscord)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -139,14 +207,15 @@
 
         #endregion
 
-        private System.Windows.Forms.Button buttonLaunch;
-        private System.Windows.Forms.Label labelUsername;
-        private System.Windows.Forms.TextBox textBoxUsername;
-        private System.Windows.Forms.Label labelFortnitePath;
-        private System.Windows.Forms.TextBox textBoxFortnitePath;
-        private System.Windows.Forms.LinkLabel linkLabelDiscord;
-        private System.Windows.Forms.Button buttonBrowse;
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialogBrowse;
-        private System.Windows.Forms.Button buttonInfo;
+        private MaterialSkin.Controls.MaterialFlatButton materialFlatButtonSettings;
+        private MaterialSkin.Controls.MaterialRaisedButton materialRaisedButtonLaunch;
+        private MaterialSkin.Controls.MaterialLabel materialLabelMadeWithLove;
+        private MaterialSkin.Controls.MaterialSingleLineTextField materialSingleLineTextFieldUsername;
+        private MaterialSkin.Controls.MaterialSingleLineTextField materialSingleLineTextFieldPassword;
+        private MaterialSkin.Controls.MaterialLabel materialLabelPassword;
+        private MaterialSkin.Controls.MaterialLabel materialLabelUsername;
+        private MaterialSkin.Controls.MaterialLabel materialLabelUpdate;
+        private MaterialSkin.Controls.MaterialFlatButton materialFlatButtonDiscord;
+        private System.Windows.Forms.PictureBox pictureBoxDiscord;
     }
 }

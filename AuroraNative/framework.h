@@ -10,12 +10,9 @@
 #include <sstream>
 #include <string>
 
-#include "base64.h"
+#include "rc4.h"
+
+#include "veh.h"
 
 #include "curl.h"
 #include "url.hpp"
-
-#include <MinHook.h>
-#pragma comment(lib, "minhook.lib")
-
-#include "veh.h"

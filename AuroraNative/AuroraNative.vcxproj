@@ -47,13 +47,13 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>bin\Debug\</OutDir>
     <IntDir>obj\Debug\</IntDir>
-    <IncludePath>./minhook;$(IncludePath)</IncludePath>
-    <LibraryPath>./minhook;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>./minhook;$(IncludePath)</IncludePath>
-    <LibraryPath>./minhook;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
     <OutDir>bin\Release\</OutDir>
     <IntDir>obj\Release\</IntDir>
   </PropertyGroup>
@@ -83,7 +83,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <Optimization>MinSpace</Optimization>
+      <Optimization>Full</Optimization>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -95,11 +95,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="base64.h" />
     <ClInclude Include="build.h" />
     <ClInclude Include="curl.h" />
     <ClInclude Include="curlver.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="rc4.h" />
     <ClInclude Include="string.hpp" />
     <ClInclude Include="url.hpp" />
     <ClInclude Include="veh.h" />
@@ -107,7 +107,6 @@
     <ClInclude Include="system.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="base64.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

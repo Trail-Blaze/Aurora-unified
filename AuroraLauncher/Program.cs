@@ -30,7 +30,7 @@ namespace AuroraLauncher
 #if GUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new GUI());
+            Application.Run(new Gui());
 #else
             var formattedArguments = string.Join(" ", args);
 

@@ -5,7 +5,8 @@ class AsyncStreamReader
 {
     #region Field Region
 
-    private StreamReader _reader;
+    StreamReader _reader;
+
     protected readonly byte[] _buffer;
 
     public event EventHandler<string> ValueRecieved;
@@ -23,6 +24,7 @@ class AsyncStreamReader
     public AsyncStreamReader(StreamReader reader)
     {
         _reader = reader;
+
         _buffer = new byte[0x1000];
 
         Active = false;
@@ -52,7 +54,7 @@ class AsyncStreamReader
 
     public void Stop() => Active = false;
 
-    private void Read(IAsyncResult result)
+    void Read(IAsyncResult result)
     {
         if (_reader != null)
         {

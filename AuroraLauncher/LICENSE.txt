@@ -1,0 +1,6 @@
+﻿Aurora Launcher uses the following libraries:
+- MaterialSkin
+- Newtonsoft.Json
+
+Aurora Native uses the following libraries:
+- TODO
