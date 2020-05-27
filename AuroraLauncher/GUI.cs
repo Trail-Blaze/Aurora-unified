@@ -27,8 +27,6 @@ namespace AuroraLauncher
             Configuration = new Configuration();
             Configuration.Open();
 
-            Api.Heartbeat();
-
             // settings form manages skinmanager
             _settings = new Settings(this);
 
@@ -42,6 +40,8 @@ namespace AuroraLauncher
 #endif
 
             materialSingleLineTextFieldUsername.Text = Configuration.Username;
+
+            timerHeartbeat_Tick(null, null);
 
             CheckForUpdates();
         }
@@ -122,6 +122,13 @@ namespace AuroraLauncher
         private void materialFlatButtonDiscord_Click(object sender, EventArgs e)
         {
             DiscordClick();
+        }
+
+        private void timerHeartbeat_Tick(object sender, EventArgs e)
+        {
+            Api.Heartbeat();
+
+            materialLabelOnline.Text = $"Online: {Api.Online}";
         }
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.materialFlatButtonSettings = new MaterialSkin.Controls.MaterialFlatButton();
             this.materialRaisedButtonLaunch = new MaterialSkin.Controls.MaterialRaisedButton();
             this.materialLabelMadeWithLove = new MaterialSkin.Controls.MaterialLabel();
@@ -38,6 +39,8 @@
             this.materialLabelUpdate = new MaterialSkin.Controls.MaterialLabel();
             this.materialFlatButtonDiscord = new MaterialSkin.Controls.MaterialFlatButton();
             this.pictureBoxDiscord = new System.Windows.Forms.PictureBox();
+            this.timerHeartbeat = new System.Windows.Forms.Timer(this.components);
+            this.materialLabelOnline = new MaterialSkin.Controls.MaterialLabel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDiscord)).BeginInit();
             this.SuspendLayout();
             // 
@@ -180,11 +183,31 @@
             this.pictureBoxDiscord.TabStop = false;
             this.pictureBoxDiscord.Click += new System.EventHandler(this.pictureBoxDiscord_Click);
             // 
+            // timerHeartbeat
+            // 
+            this.timerHeartbeat.Enabled = true;
+            this.timerHeartbeat.Interval = 2000;
+            this.timerHeartbeat.Tick += new System.EventHandler(this.timerHeartbeat_Tick);
+            // 
+            // materialLabelOnline
+            // 
+            this.materialLabelOnline.AutoSize = true;
+            this.materialLabelOnline.Depth = 0;
+            this.materialLabelOnline.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabelOnline.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabelOnline.Location = new System.Drawing.Point(8, 277);
+            this.materialLabelOnline.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabelOnline.Name = "materialLabelOnline";
+            this.materialLabelOnline.Size = new System.Drawing.Size(142, 19);
+            this.materialLabelOnline.TabIndex = 10;
+            this.materialLabelOnline.Text = "materialLabelOnline";
+            // 
             // Gui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(540, 350);
+            this.Controls.Add(this.materialLabelOnline);
             this.Controls.Add(this.pictureBoxDiscord);
             this.Controls.Add(this.materialFlatButtonDiscord);
             this.Controls.Add(this.materialLabelUpdate);
@@ -217,5 +240,7 @@
         private MaterialSkin.Controls.MaterialLabel materialLabelUpdate;
         private MaterialSkin.Controls.MaterialFlatButton materialFlatButtonDiscord;
         private System.Windows.Forms.PictureBox pictureBoxDiscord;
+        private System.Windows.Forms.Timer timerHeartbeat;
+        private MaterialSkin.Controls.MaterialLabel materialLabelOnline;
     }
 }
