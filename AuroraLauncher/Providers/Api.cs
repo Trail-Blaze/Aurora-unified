@@ -1,4 +1,5 @@
 ﻿using RestSharp;
+using System;
 
 namespace AuroraLauncher.Providers
 {
@@ -14,6 +15,8 @@ namespace AuroraLauncher.Providers
 
         public static string Version => GetVersion();
 
+        public static int Online => GetOnline();
+
         #endregion
 
         #region Method Region
@@ -26,6 +29,18 @@ namespace AuroraLauncher.Providers
                 return "Offline";
 
             return version;
+        }
+
+        public static void Heartbeat() => _client.Post(new RestRequest("heartbeat"));
+
+        static int GetOnline()
+        {
+            string online = _client.Get(new RestRequest("online")).Content;
+
+            if (string.IsNullOrEmpty(online))
+                return 0;
+
+            return Convert.ToInt32(online);
         }
 
         #endregion

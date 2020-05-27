@@ -27,6 +27,8 @@ namespace AuroraLauncher
             Configuration = new Configuration();
             Configuration.Open();
 
+            Api.Heartbeat();
+
             // settings form manages skinmanager
             _settings = new Settings(this);
 
