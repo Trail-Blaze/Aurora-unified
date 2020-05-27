@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.IO;
-
+using System.Reflection;
 using static System.Environment;
 
 namespace AuroraLauncher.Providers

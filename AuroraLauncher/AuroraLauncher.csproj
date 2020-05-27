@@ -130,7 +130,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>if "$(ConfigurationName)" == "Release" "$(SolutionDir)Tools\ConfuserEx\Confuser.CLI.exe" "$(ProjectDir)AuroraLauncher.crproj"</PostBuildEvent>
   </PropertyGroup>
 </Project>
