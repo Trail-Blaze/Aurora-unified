@@ -18,7 +18,7 @@ namespace AuroraServer
             .WriteTo.Console()
             .CreateLogger();
 
-        /*public static Random _rnd = new Random();
+        public static Random _rnd = new Random();
 
         public static bool notinit = false;
         public static UdpClient udpServer;
@@ -30,7 +30,7 @@ namespace AuroraServer
         {
             Log.Information("AuroraServer by Cyuubi, do not redistribute!");
 
-            /*handshakesecret = new byte[2][];
+            handshakesecret = new byte[2][];
 
             byte[] bytes = new byte[0x400];
 
@@ -72,10 +72,10 @@ namespace AuroraServer
 
                 //Console.WriteLine(Encoding.ASCII.GetString(bytes, 0, bytes.Length));
                 //udpServer.Send(bytes, bytes.Length, sender);
-            }*/
+            }
         }
 
-        /*static void Recieved(BitReader reader, IPEndPoint sender)
+        static void Recieved(BitReader reader, IPEndPoint sender)
         {
             PrintBits(reader._bits);
 
@@ -235,6 +235,6 @@ namespace AuroraServer
             builder.Append("};");
 
             Log.Information($"Is Client = {isClient} | {builder.ToString()}");
-        }*/
+        }
     }
 }
