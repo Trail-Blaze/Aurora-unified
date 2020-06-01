@@ -6,15 +6,12 @@
 #if !NO_EGL
         internal const string ClientArguments = "";
 #else
-        internal const string ClientArguments = "-epicapp=Fortnite -epicenv=Prod -epiclocale=en-us -epicportal -nothreadtimeout";
+        internal const string ClientArguments = "-epicapp=Fortnite -epicenv=Prod -epiclocale=en-us -epicportal";
 #endif
         internal const string ClientNative = "AuroraNative.dll";
 
-#if !FDEV
-        internal const string LauncherUrl = "http://localhost";
-#else
-        //internal const string LauncherUrl = "https://fdev.cyuubi.xyz";
-        internal const string LauncherUrl = "http://localhost";
+#if ONLINE
+        internal const string LauncherUrl = "https://aurorafn.dev";
 #endif
 
         // TODO: Figure out how to generate FLToken's without hardcoding them.

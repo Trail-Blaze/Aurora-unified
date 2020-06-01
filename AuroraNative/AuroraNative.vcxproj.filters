@@ -30,19 +30,19 @@
     <ClInclude Include="system.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="veh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="build.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="url.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="rc4.h">
+    <ClInclude Include="string.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="string.hpp">
+    <ClInclude Include="util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hook.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -53,10 +53,10 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="veh.cpp">
+    <ClCompile Include="url.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="url.cpp">
+    <ClCompile Include="hook.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

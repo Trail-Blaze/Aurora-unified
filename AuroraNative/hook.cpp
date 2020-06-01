@@ -2,16 +2,18 @@
 
 #define XIP Rip
 
-uintptr_t VehHook::lpTarget = 0;
-uintptr_t VehHook::lpDetour = 0;
+uintptr_t VHook::lpTarget = 0;
+uintptr_t VHook::lpDetour = 0;
 
-PVOID VehHook::hHandle = nullptr;
-DWORD VehHook::dwProtect = 0;
+PVOID VHook::hHandle = nullptr;
+DWORD VHook::dwProtect = 0;
 
-bool VehHook::Run(uintptr_t lpTarget, uintptr_t lpDetour)
+BOOL VHook::Hook(uintptr_t lpTarget = 0, uintptr_t lpDetour = 0)
 {
-	VehHook::lpTarget = lpTarget;
-	VehHook::lpDetour = lpDetour;
+	if (lpTarget != 0)
+		VHook::lpTarget = lpTarget;
+	if (lpDetour != 0)
+		VHook::lpDetour = lpDetour;
 
 	if (IsSamePage((const uint8_t*)lpTarget, (const uint8_t*)lpDetour))
 		return false;
@@ -24,7 +26,7 @@ bool VehHook::Run(uintptr_t lpTarget, uintptr_t lpDetour)
 	return false;
 }
 
-bool VehHook::Unhook()
+BOOL VHook::Unhook()
 {
 	DWORD dwOldProtect;
 
@@ -34,7 +36,7 @@ bool VehHook::Unhook()
 	return false;
 }
 
-LONG WINAPI VehHook::Handler(EXCEPTION_POINTERS* pExceptionInfo)
+LONG WINAPI VHook::Handler(EXCEPTION_POINTERS* pExceptionInfo)
 {
 	if (pExceptionInfo->ExceptionRecord->ExceptionCode == STATUS_GUARD_PAGE_VIOLATION)
 	{
@@ -58,7 +60,7 @@ LONG WINAPI VehHook::Handler(EXCEPTION_POINTERS* pExceptionInfo)
 	return EXCEPTION_CONTINUE_SEARCH;
 }
 
-bool VehHook::IsSamePage(const uint8_t* pAddressFirst, const uint8_t* pAddressSecond)
+BOOL VHook::IsSamePage(const uint8_t* pAddressFirst, const uint8_t* pAddressSecond)
 {
 	MEMORY_BASIC_INFORMATION mbiFirst, mbiSecond;
 

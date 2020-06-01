@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NATIVE NO_EGL GUI FDEV</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NATIVE NO_EGL GUI FDEV ONLINE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -30,7 +30,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;NATIVE NO_EGL GUI FDEV</DefineConstants>
+    <DefineConstants>TRACE;NATIVE NO_EGL GUI ONLINE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -80,12 +80,6 @@
     <Compile Include="Settings.Designer.cs">
       <DependentUpon>Settings.cs</DependentUpon>
     </Compile>
-    <Compile Include="OldGUI.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="OldGUI.Designer.cs">
-      <DependentUpon>OldGUI.cs</DependentUpon>
-    </Compile>
     <Compile Include="Gui.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,9 +96,6 @@
     <Compile Include="Utilities\Win32.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="OldGUI.resx">
-      <DependentUpon>OldGUI.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Gui.resx">
       <DependentUpon>Gui.cs</DependentUpon>
     </EmbeddedResource>

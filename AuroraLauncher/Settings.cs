@@ -22,11 +22,7 @@ namespace AuroraLauncher
             _skinManager.AddFormToManage(this);
 
             _skinManager.Theme = _gui.Configuration.DarkMode ? MaterialSkinManager.Themes.DARK : MaterialSkinManager.Themes.LIGHT;
-#if !FDEV
-            _skinManager.ColorScheme = new ColorScheme(Primary.Blue600, Primary.Blue800, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE);
-#else
             _skinManager.ColorScheme = new ColorScheme(Primary.Pink600, Primary.Pink800, Primary.Pink400, Accent.Pink200, TextShade.WHITE);
-#endif
 
             materialSingleLineTextFieldInstallLocation.Text = _gui.Configuration.InstallLocation;
 
@@ -52,7 +48,6 @@ namespace AuroraLauncher
             Save();
         }
 
-        //todo: might wanna rename this lul
         private void materialRaisedButtonReset_Click(object sender, EventArgs e)
         {
             foreach (EpicGames.Installed.Installation installation
@@ -63,7 +58,7 @@ namespace AuroraLauncher
             }
         }
 
-        private void Settings_FormClosing(object sender, System.Windows.Forms.FormClosingEventArgs e)
+        private void Settings_FormClosing(object sender, FormClosingEventArgs e)
         {
             Save();
         }

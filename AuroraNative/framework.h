@@ -9,10 +9,10 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <map>
 
-#include "rc4.h"
-
-#include "veh.h"
+#include "util.h"
+#include "hook.h"
 
 #include "curl.h"
 #include "url.hpp"

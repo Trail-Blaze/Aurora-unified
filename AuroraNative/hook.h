@@ -2,11 +2,7 @@
 
 #include "pch.h"
 
-class VehHook {
-public:
-	static bool Run(uintptr_t lpTarget, uintptr_t lpDetour);
-	static bool Unhook();
-
+class VHook {
 private:
 	static uintptr_t lpTarget;
 	static uintptr_t lpDetour;
@@ -14,7 +10,12 @@ private:
 	static PVOID hHandle;
 	static DWORD dwProtect;
 
+public:
+	static BOOL Hook(uintptr_t lpTarget, uintptr_t lpDetour);
+	static BOOL Unhook();
+
+private:
 	static LONG WINAPI Handler(EXCEPTION_POINTERS *pExceptionInfo);
 
-	static bool IsSamePage(const uint8_t* pAddressFirst, const uint8_t* pAddressSecond);
+	static BOOL IsSamePage(const uint8_t* pAddressFirst, const uint8_t* pAddressSecond);
 };

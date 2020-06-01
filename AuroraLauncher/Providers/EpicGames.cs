@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.IO;
-using System.Reflection;
+
 using static System.Environment;
 
 namespace AuroraLauncher.Providers
@@ -13,7 +13,7 @@ namespace AuroraLauncher.Providers
         {
             public class Installation
             {
-                [JsonProperty("InstallLocation")]
+                [JsonProperty("InstallLocation")] // Required because of ConfuserEx.
                 public string InstallLocation { get; set; }
 
                 [JsonProperty("AppName")]

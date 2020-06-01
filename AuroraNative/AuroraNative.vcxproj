@@ -47,13 +47,9 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>bin\Debug\</OutDir>
     <IntDir>obj\Debug\</IntDir>
-    <IncludePath>$(IncludePath)</IncludePath>
-    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(IncludePath)</IncludePath>
-    <LibraryPath>$(LibraryPath)</LibraryPath>
     <OutDir>bin\Release\</OutDir>
     <IntDir>obj\Release\</IntDir>
   </PropertyGroup>
@@ -82,7 +78,6 @@
       <PreprocessorDefinitions>NDEBUG;AURORANATIVE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
     </ClCompile>
     <Link>
@@ -91,7 +86,6 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -99,10 +93,10 @@
     <ClInclude Include="curl.h" />
     <ClInclude Include="curlver.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="rc4.h" />
     <ClInclude Include="string.hpp" />
     <ClInclude Include="url.hpp" />
-    <ClInclude Include="veh.h" />
+    <ClInclude Include="util.h" />
+    <ClInclude Include="hook.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="system.h" />
   </ItemGroup>
@@ -113,7 +107,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="url.cpp" />
-    <ClCompile Include="veh.cpp" />
+    <ClCompile Include="hook.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

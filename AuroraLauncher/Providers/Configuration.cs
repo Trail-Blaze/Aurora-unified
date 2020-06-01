@@ -20,8 +20,8 @@ namespace AuroraLauncher.Providers
         [JsonProperty("Arguments")]
         public string Arguments { get; set; }
 
-        [JsonProperty("Username")]
-        public string Username { get; set; }
+        [JsonProperty("Email")]
+        public string Email { get; set; }
         [JsonProperty("Password")]
         public string Password { get; set; }
 
@@ -32,7 +32,7 @@ namespace AuroraLauncher.Providers
 
         #region Method Region
 
-        // todo: add configuration file to build.cs
+        // TODO: Add configuration file to Build.cs.
         public void Open()
         {
             if (File.Exists(_path))
@@ -44,8 +44,8 @@ namespace AuroraLauncher.Providers
 
                 Arguments = configuration.Arguments;
 
-                Username = configuration.Username;
-                Password = configuration.Password; //ignored for now until future update?
+                Email = configuration.Email;
+                Password = configuration.Password;
 
                 DarkMode = configuration.DarkMode;
             }

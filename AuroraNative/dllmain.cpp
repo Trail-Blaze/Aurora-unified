@@ -37,24 +37,16 @@ CURLcode CurlEasySetopt(struct Curl_easy* data, CURLoption tag, ...) {
 #ifdef LOCALHOST
             redirect.scheme("http").host("localhost");
 #endif // LOCALHOST
-#ifdef FDEV
-            std::string sDomain(FDEV_DOMAIN);
-
-            char* pDomain = (char*)malloc(sDomain.length());
-
-            rc4((char*)std::string(DOMAIN_KEY).c_str(), (char*)sDomain.c_str(), (unsigned char*)pDomain);
-
-            redirect.scheme("http").host(pDomain);
-
-            free(pDomain);
-#endif // FDEV
+#ifdef ONLINE
+            redirect.host("aurorafn.dev");
+#endif // ONLINE
 
             url = redirect.str();
         }
 
 #ifdef VERBOSE
         printf("CurlEasySetopt (va): tag = %i, url = %s\n", tag, url.c_str());
-#endif
+#endif // VERBOSE
 
         result = CurlSetoptVa(data, tag, url.c_str());
 
@@ -63,10 +55,34 @@ CURLcode CurlEasySetopt(struct Curl_easy* data, CURLoption tag, ...) {
     } else if (tag == CURLOPT_SSL_VERIFYPEER) {
 #ifdef VERBOSE
         printf("CurlEasySetopt (va): tag = %i\n", tag);
-#endif
+#endif // VERBOSE
 
         result = CurlSetoptVa(data, tag, false);
 #endif // DISABLE_PINNING
+#ifdef DISABLE_PROXY
+    } else if (tag == CURLOPT_PROXY) {
+#ifdef VERBOSE
+        printf("CurlEasySetopt (va): tag = %i\n", tag);
+#endif // VERBOSE
+
+        result = CurlSetoptVa(data, tag, "");
+#endif // DISABLE_PROXY
+    } else if (tag == 1337) {
+#ifdef VERBOSE
+        printf("CurlEasySetopt: tag = %i\n", tag);
+#endif // VERBOSE
+
+        printf("\nYou usually will never see this message whilest running Aurora, but I've seen that you're reverse engineering my hard work... Why?\n");
+        printf("It took me a month to create AuroraNative, I don't have any money to upgrade my computer.\n");
+        printf("I guess this is my only way to communicate to you \"skids/hackers\", but can you please stop?\n");
+        printf("I understand, you want to check out my code. But, you're just going to cause more trouble than good.\n");
+        printf("I don't want to be credited in your skidded version of my work, all it does is cause more confusion.\n");
+        printf("Please don't distribute modified versions of my hard work, it's fine if you want to do it in private.\n");
+        printf("But, don't tell anybody how to do so. You're just spoonfeeding them, it doesn't help anybody.\n");
+        printf("Kemo if you remove this message, then you're just as scummy as the others.\n");
+        printf("Thank you, for complying. I hope we can talk, soon. -Cyuubi\n\n");
+
+        result = CurlSetopt(data, tag, arg);
     } else {
 #ifdef VERBOSE
         printf("CurlEasySetopt: tag = %i\n", tag);
@@ -84,81 +100,19 @@ CURLcode CurlEasySetopt(struct Curl_easy* data, CURLoption tag, ...) {
 	return result;
 }
 
-BOOL MaskCompare(PVOID pBuffer, LPCSTR lpPattern, LPCSTR lpMask) {
-    for (auto value = reinterpret_cast<PBYTE>(pBuffer); *lpMask; ++lpPattern, ++lpMask, ++value) {
-        if (*lpMask == 'x' && *reinterpret_cast<LPCBYTE>(lpPattern) != *value)
-            return FALSE;
-    }
-
-    return TRUE;
-}
-
-PBYTE FindPattern(PVOID pBase, DWORD dwSize, LPCSTR lpPattern, LPCSTR lpMask) {
-    dwSize -= static_cast<DWORD>(strlen(lpMask));
-
-    for (auto index = 0UL; index < dwSize; ++index) {
-        auto pAddress = reinterpret_cast<PBYTE>(pBase) + index;
-
-        if (MaskCompare(pAddress, lpPattern, lpMask))
-            return pAddress;
-    }
-
-    return NULL;
-}
-
-PBYTE FindPattern(LPCSTR lpPattern, LPCSTR lpMask) {
-    MODULEINFO info = { 0 };
-
-    GetModuleInformation(GetCurrentProcess(), GetModuleHandle(0), &info, sizeof(info));
-
-    return FindPattern(info.lpBaseOfDll, info.SizeOfImage, lpPattern, lpMask);
-}
-
 VOID Main() {
     AllocConsole();
 
     FILE* pFile;
     freopen_s(&pFile, "CONOUT$", "w", stdout);
 
-    // Native Author
-    std::string sAuthor(NATIVE_AUTHOR);
-
-    char* pAuthor = (char*)malloc(sAuthor.length());
-
-    rc4((char*)std::string(COMMON_KEY).c_str(), (char*)sAuthor.c_str(), (unsigned char*)pAuthor);
-
-    printf((std::string(pAuthor) + "\n\n").c_str());
-
-    free(pAuthor);
-
-#ifdef FDEV
-    // FDev Credits
-    std::string sCredits(FDEV_CREDITS);
-
-    char* pCredits = (char*)malloc(sCredits.length());
-
-    rc4((char*)std::string(COMMON_KEY).c_str(), (char*)sCredits.c_str(), (unsigned char*)pCredits);
-
-    printf((std::string(pCredits) + "\n").c_str());
-
-    free(pCredits);
-
-    // FDev Discord
-    std::string sDiscord(FDEV_DISCORD);
-
-    char* pDiscord = (char*)malloc(sDiscord.length());
-
-    rc4((char*)std::string(COMMON_KEY).c_str(), (char*)sDiscord.c_str(), (unsigned char*)pDiscord);
-
-    printf((std::string(pDiscord) + "\n\n").c_str());
-
-    free(pDiscord);
-#endif // FDEV
+    printf("Aurora, made with <3 by Cyuubi and Slushia.\n");
+    printf("Discord: https://discord.gg/aurorafn\n\n");
 
     // CurlEasySetopt = 89 54 24 10 4C 89 44 24 18 4C 89 4C 24 20 48 83 EC 28 48 85 C9 75 08 8D 41 2B 48 83 C4 28 C3 4C
     // CurlSetopt = 48 89 5C 24 08 48 89 6C 24 10 48 89 74 24 18 57 48 83 EC 30 33 ED 49 8B F0 48 8B D9
 
-    auto lpCurlEasySetoptAddress = FindPattern("\x89\x54\x24\x10\x4C\x89\x44\x24\x18\x4C\x89\x4C\x24\x20\x48\x83\xEC\x28\x48\x85\xC9\x75\x08\x8D\x41\x2B\x48\x83\xC4\x28\xC3\x4C", "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+    auto lpCurlEasySetoptAddress = Util::FindPattern("\x89\x54\x24\x10\x4C\x89\x44\x24\x18\x4C\x89\x4C\x24\x20\x48\x83\xEC\x28\x48\x85\xC9\x75\x08\x8D\x41\x2B\x48\x83\xC4\x28\xC3\x4C", "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
     if (!lpCurlEasySetoptAddress) {
         printf("Finding pattern for CurlEasySetopt has failed, bailing-out immediately!");
         return;
@@ -168,7 +122,7 @@ VOID Main() {
     printf("lpCurlEasySetoptAddress: %" PRIXPTR "\n", lpCurlEasySetoptAddress);
 #endif // VERBOSE
 
-    auto lpCurlSetoptAddress = FindPattern("\x48\x89\x5C\x24\x08\x48\x89\x6C\x24\x10\x48\x89\x74\x24\x18\x57\x48\x83\xEC\x30\x33\xED\x49\x8B\xF0\x48\x8B\xD9", "xxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+    auto lpCurlSetoptAddress = Util::FindPattern("\x48\x89\x5C\x24\x08\x48\x89\x6C\x24\x10\x48\x89\x74\x24\x18\x57\x48\x83\xEC\x30\x33\xED\x49\x8B\xF0\x48\x8B\xD9", "xxxxxxxxxxxxxxxxxxxxxxxxxxxx");
     if (!lpCurlSetoptAddress) {
         printf("Finding pattern for CurlSetopt has failed, bailing-out immediately!");
         return;
@@ -181,7 +135,7 @@ VOID Main() {
     LPVOID lpCurlEasySetopt = reinterpret_cast<LPVOID>(lpCurlEasySetoptAddress);
     LPVOID lpCurlSetopt = reinterpret_cast<LPVOID>(lpCurlSetoptAddress);
 
-    (new VehHook())->Run((uintptr_t)lpCurlEasySetopt, (uintptr_t)CurlEasySetopt);
+    (new VHook())->Hook((uintptr_t)lpCurlEasySetopt, (uintptr_t)CurlEasySetopt);
 
     CurlSetopt = reinterpret_cast<decltype(CurlSetopt)>(lpCurlSetopt);
 }

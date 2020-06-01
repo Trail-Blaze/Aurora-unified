@@ -32,15 +32,16 @@
             this.materialFlatButtonSettings = new MaterialSkin.Controls.MaterialFlatButton();
             this.materialRaisedButtonLaunch = new MaterialSkin.Controls.MaterialRaisedButton();
             this.materialLabelMadeWithLove = new MaterialSkin.Controls.MaterialLabel();
-            this.materialSingleLineTextFieldUsername = new MaterialSkin.Controls.MaterialSingleLineTextField();
+            this.materialSingleLineTextFieldEmail = new MaterialSkin.Controls.MaterialSingleLineTextField();
             this.materialSingleLineTextFieldPassword = new MaterialSkin.Controls.MaterialSingleLineTextField();
             this.materialLabelPassword = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabelUsername = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabelEmail = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabelUpdate = new MaterialSkin.Controls.MaterialLabel();
             this.materialFlatButtonDiscord = new MaterialSkin.Controls.MaterialFlatButton();
             this.pictureBoxDiscord = new System.Windows.Forms.PictureBox();
             this.timerHeartbeat = new System.Windows.Forms.Timer(this.components);
             this.materialLabelOnline = new MaterialSkin.Controls.MaterialLabel();
+            this.materialFlatButtonInfo = new MaterialSkin.Controls.MaterialFlatButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDiscord)).BeginInit();
             this.SuspendLayout();
             // 
@@ -82,40 +83,41 @@
             this.materialLabelMadeWithLove.Location = new System.Drawing.Point(94, 307);
             this.materialLabelMadeWithLove.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabelMadeWithLove.Name = "materialLabelMadeWithLove";
-            this.materialLabelMadeWithLove.Size = new System.Drawing.Size(166, 19);
+            this.materialLabelMadeWithLove.Size = new System.Drawing.Size(247, 19);
             this.materialLabelMadeWithLove.TabIndex = 2;
-            this.materialLabelMadeWithLove.Text = "Made with <3 by Cyuubi";
+            this.materialLabelMadeWithLove.Text = "Made with <3 by Cyuubi and Slushia";
             // 
-            // materialSingleLineTextFieldUsername
+            // materialSingleLineTextFieldEmail
             // 
-            this.materialSingleLineTextFieldUsername.Depth = 0;
-            this.materialSingleLineTextFieldUsername.Hint = "Ninja";
-            this.materialSingleLineTextFieldUsername.Location = new System.Drawing.Point(99, 79);
-            this.materialSingleLineTextFieldUsername.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialSingleLineTextFieldUsername.Name = "materialSingleLineTextFieldUsername";
-            this.materialSingleLineTextFieldUsername.PasswordChar = '\0';
-            this.materialSingleLineTextFieldUsername.SelectedText = "";
-            this.materialSingleLineTextFieldUsername.SelectionLength = 0;
-            this.materialSingleLineTextFieldUsername.SelectionStart = 0;
-            this.materialSingleLineTextFieldUsername.Size = new System.Drawing.Size(429, 23);
-            this.materialSingleLineTextFieldUsername.TabIndex = 3;
-            this.materialSingleLineTextFieldUsername.UseSystemPasswordChar = false;
-            this.materialSingleLineTextFieldUsername.TextChanged += new System.EventHandler(this.materialSingleLineTextFieldUsername_TextChanged);
+            this.materialSingleLineTextFieldEmail.Depth = 0;
+            this.materialSingleLineTextFieldEmail.Hint = "";
+            this.materialSingleLineTextFieldEmail.Location = new System.Drawing.Point(69, 79);
+            this.materialSingleLineTextFieldEmail.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialSingleLineTextFieldEmail.Name = "materialSingleLineTextFieldEmail";
+            this.materialSingleLineTextFieldEmail.PasswordChar = '\0';
+            this.materialSingleLineTextFieldEmail.SelectedText = "";
+            this.materialSingleLineTextFieldEmail.SelectionLength = 0;
+            this.materialSingleLineTextFieldEmail.SelectionStart = 0;
+            this.materialSingleLineTextFieldEmail.Size = new System.Drawing.Size(459, 23);
+            this.materialSingleLineTextFieldEmail.TabIndex = 3;
+            this.materialSingleLineTextFieldEmail.UseSystemPasswordChar = false;
+            this.materialSingleLineTextFieldEmail.TextChanged += new System.EventHandler(this.materialSingleLineTextFieldEmail_TextChanged);
             // 
             // materialSingleLineTextFieldPassword
             // 
             this.materialSingleLineTextFieldPassword.Depth = 0;
             this.materialSingleLineTextFieldPassword.Hint = "";
-            this.materialSingleLineTextFieldPassword.Location = new System.Drawing.Point(99, 108);
+            this.materialSingleLineTextFieldPassword.Location = new System.Drawing.Point(97, 108);
             this.materialSingleLineTextFieldPassword.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialSingleLineTextFieldPassword.Name = "materialSingleLineTextFieldPassword";
             this.materialSingleLineTextFieldPassword.PasswordChar = '\0';
             this.materialSingleLineTextFieldPassword.SelectedText = "";
             this.materialSingleLineTextFieldPassword.SelectionLength = 0;
             this.materialSingleLineTextFieldPassword.SelectionStart = 0;
-            this.materialSingleLineTextFieldPassword.Size = new System.Drawing.Size(429, 23);
+            this.materialSingleLineTextFieldPassword.Size = new System.Drawing.Size(431, 23);
             this.materialSingleLineTextFieldPassword.TabIndex = 6;
-            this.materialSingleLineTextFieldPassword.UseSystemPasswordChar = false;
+            this.materialSingleLineTextFieldPassword.UseSystemPasswordChar = true;
+            this.materialSingleLineTextFieldPassword.TextChanged += new System.EventHandler(this.materialSingleLineTextFieldPassword_TextChanged);
             // 
             // materialLabelPassword
             // 
@@ -123,25 +125,25 @@
             this.materialLabelPassword.Depth = 0;
             this.materialLabelPassword.Font = new System.Drawing.Font("Roboto", 11F);
             this.materialLabelPassword.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabelPassword.Location = new System.Drawing.Point(14, 112);
+            this.materialLabelPassword.Location = new System.Drawing.Point(12, 112);
             this.materialLabelPassword.MouseState = MaterialSkin.MouseState.HOVER;
             this.materialLabelPassword.Name = "materialLabelPassword";
             this.materialLabelPassword.Size = new System.Drawing.Size(79, 19);
             this.materialLabelPassword.TabIndex = 5;
             this.materialLabelPassword.Text = "Password:";
             // 
-            // materialLabelUsername
+            // materialLabelEmail
             // 
-            this.materialLabelUsername.AutoSize = true;
-            this.materialLabelUsername.Depth = 0;
-            this.materialLabelUsername.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabelUsername.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabelUsername.Location = new System.Drawing.Point(12, 83);
-            this.materialLabelUsername.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabelUsername.Name = "materialLabelUsername";
-            this.materialLabelUsername.Size = new System.Drawing.Size(81, 19);
-            this.materialLabelUsername.TabIndex = 4;
-            this.materialLabelUsername.Text = "Username:";
+            this.materialLabelEmail.AutoSize = true;
+            this.materialLabelEmail.Depth = 0;
+            this.materialLabelEmail.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabelEmail.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabelEmail.Location = new System.Drawing.Point(12, 83);
+            this.materialLabelEmail.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabelEmail.Name = "materialLabelEmail";
+            this.materialLabelEmail.Size = new System.Drawing.Size(51, 19);
+            this.materialLabelEmail.TabIndex = 4;
+            this.materialLabelEmail.Text = "Email:";
             // 
             // materialLabelUpdate
             // 
@@ -155,6 +157,7 @@
             this.materialLabelUpdate.Size = new System.Drawing.Size(147, 19);
             this.materialLabelUpdate.TabIndex = 7;
             this.materialLabelUpdate.Text = "materialLabelUpdate";
+            this.materialLabelUpdate.Visible = false;
             // 
             // materialFlatButtonDiscord
             // 
@@ -185,7 +188,6 @@
             // 
             // timerHeartbeat
             // 
-            this.timerHeartbeat.Enabled = true;
             this.timerHeartbeat.Interval = 2000;
             this.timerHeartbeat.Tick += new System.EventHandler(this.timerHeartbeat_Tick);
             // 
@@ -201,20 +203,38 @@
             this.materialLabelOnline.Size = new System.Drawing.Size(142, 19);
             this.materialLabelOnline.TabIndex = 10;
             this.materialLabelOnline.Text = "materialLabelOnline";
+            this.materialLabelOnline.Visible = false;
+            // 
+            // materialFlatButtonInfo
+            // 
+            this.materialFlatButtonInfo.AutoSize = true;
+            this.materialFlatButtonInfo.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialFlatButtonInfo.Depth = 0;
+            this.materialFlatButtonInfo.Location = new System.Drawing.Point(484, 251);
+            this.materialFlatButtonInfo.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.materialFlatButtonInfo.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialFlatButtonInfo.Name = "materialFlatButtonInfo";
+            this.materialFlatButtonInfo.Primary = false;
+            this.materialFlatButtonInfo.Size = new System.Drawing.Size(43, 36);
+            this.materialFlatButtonInfo.TabIndex = 11;
+            this.materialFlatButtonInfo.Text = "Info";
+            this.materialFlatButtonInfo.UseVisualStyleBackColor = true;
+            this.materialFlatButtonInfo.Click += new System.EventHandler(this.materialFlatButtonInfo_Click);
             // 
             // Gui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(540, 350);
+            this.Controls.Add(this.materialFlatButtonInfo);
             this.Controls.Add(this.materialLabelOnline);
             this.Controls.Add(this.pictureBoxDiscord);
             this.Controls.Add(this.materialFlatButtonDiscord);
             this.Controls.Add(this.materialLabelUpdate);
             this.Controls.Add(this.materialSingleLineTextFieldPassword);
             this.Controls.Add(this.materialLabelPassword);
-            this.Controls.Add(this.materialLabelUsername);
-            this.Controls.Add(this.materialSingleLineTextFieldUsername);
+            this.Controls.Add(this.materialLabelEmail);
+            this.Controls.Add(this.materialSingleLineTextFieldEmail);
             this.Controls.Add(this.materialLabelMadeWithLove);
             this.Controls.Add(this.materialRaisedButtonLaunch);
             this.Controls.Add(this.materialFlatButtonSettings);
@@ -233,14 +253,15 @@
         private MaterialSkin.Controls.MaterialFlatButton materialFlatButtonSettings;
         private MaterialSkin.Controls.MaterialRaisedButton materialRaisedButtonLaunch;
         private MaterialSkin.Controls.MaterialLabel materialLabelMadeWithLove;
-        private MaterialSkin.Controls.MaterialSingleLineTextField materialSingleLineTextFieldUsername;
+        private MaterialSkin.Controls.MaterialSingleLineTextField materialSingleLineTextFieldEmail;
         private MaterialSkin.Controls.MaterialSingleLineTextField materialSingleLineTextFieldPassword;
         private MaterialSkin.Controls.MaterialLabel materialLabelPassword;
-        private MaterialSkin.Controls.MaterialLabel materialLabelUsername;
+        private MaterialSkin.Controls.MaterialLabel materialLabelEmail;
         private MaterialSkin.Controls.MaterialLabel materialLabelUpdate;
         private MaterialSkin.Controls.MaterialFlatButton materialFlatButtonDiscord;
         private System.Windows.Forms.PictureBox pictureBoxDiscord;
         private System.Windows.Forms.Timer timerHeartbeat;
         private MaterialSkin.Controls.MaterialLabel materialLabelOnline;
+        private MaterialSkin.Controls.MaterialFlatButton materialFlatButtonInfo;
     }
 }
