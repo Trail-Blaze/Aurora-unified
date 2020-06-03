@@ -307,5 +307,10 @@ namespace AuroraLauncher
             Configuration.Password = materialSingleLineTextFieldPassword.Text;
             Configuration.Save();
         }
+
+        private void materialRaisedButtonView_Click(object sender, EventArgs e)
+        {
+            materialSingleLineTextFieldPassword.UseSystemPasswordChar = !materialSingleLineTextFieldPassword.UseSystemPasswordChar;
+        }
     }
 }

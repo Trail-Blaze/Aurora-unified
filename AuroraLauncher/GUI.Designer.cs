@@ -42,6 +42,7 @@
             this.timerHeartbeat = new System.Windows.Forms.Timer(this.components);
             this.materialLabelOnline = new MaterialSkin.Controls.MaterialLabel();
             this.materialFlatButtonInfo = new MaterialSkin.Controls.MaterialFlatButton();
+            this.materialRaisedButtonView = new MaterialSkin.Controls.MaterialRaisedButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDiscord)).BeginInit();
             this.SuspendLayout();
             // 
@@ -114,7 +115,7 @@
             this.materialSingleLineTextFieldPassword.SelectedText = "";
             this.materialSingleLineTextFieldPassword.SelectionLength = 0;
             this.materialSingleLineTextFieldPassword.SelectionStart = 0;
-            this.materialSingleLineTextFieldPassword.Size = new System.Drawing.Size(431, 23);
+            this.materialSingleLineTextFieldPassword.Size = new System.Drawing.Size(401, 23);
             this.materialSingleLineTextFieldPassword.TabIndex = 6;
             this.materialSingleLineTextFieldPassword.UseSystemPasswordChar = true;
             this.materialSingleLineTextFieldPassword.TextChanged += new System.EventHandler(this.materialSingleLineTextFieldPassword_TextChanged);
@@ -221,11 +222,25 @@
             this.materialFlatButtonInfo.UseVisualStyleBackColor = true;
             this.materialFlatButtonInfo.Click += new System.EventHandler(this.materialFlatButtonInfo_Click);
             // 
+            // materialRaisedButtonView
+            // 
+            this.materialRaisedButtonView.Depth = 0;
+            this.materialRaisedButtonView.Location = new System.Drawing.Point(504, 108);
+            this.materialRaisedButtonView.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialRaisedButtonView.Name = "materialRaisedButtonView";
+            this.materialRaisedButtonView.Primary = true;
+            this.materialRaisedButtonView.Size = new System.Drawing.Size(24, 23);
+            this.materialRaisedButtonView.TabIndex = 12;
+            this.materialRaisedButtonView.Text = "V";
+            this.materialRaisedButtonView.UseVisualStyleBackColor = true;
+            this.materialRaisedButtonView.Click += new System.EventHandler(this.materialRaisedButtonView_Click);
+            // 
             // Gui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(540, 350);
+            this.Controls.Add(this.materialRaisedButtonView);
             this.Controls.Add(this.materialFlatButtonInfo);
             this.Controls.Add(this.materialLabelOnline);
             this.Controls.Add(this.pictureBoxDiscord);
@@ -263,5 +278,6 @@
         private System.Windows.Forms.Timer timerHeartbeat;
         private MaterialSkin.Controls.MaterialLabel materialLabelOnline;
         private MaterialSkin.Controls.MaterialFlatButton materialFlatButtonInfo;
+        private MaterialSkin.Controls.MaterialRaisedButton materialRaisedButtonView;
     }
 }
