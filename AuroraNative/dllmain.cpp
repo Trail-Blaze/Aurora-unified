@@ -4,13 +4,10 @@ CURLcode (*CurlSetopt)(struct Curl_easy*, CURLoption, va_list) = nullptr;
 
 CURLcode CurlSetoptVa(struct Curl_easy* data, CURLoption option, ...) {
     va_list arg;
-
     CURLcode result;
 
     va_start(arg, option);
-
     result = CurlSetopt(data, option, arg);
-
     va_end(arg);
 
     return result;
@@ -18,14 +15,12 @@ CURLcode CurlSetoptVa(struct Curl_easy* data, CURLoption option, ...) {
 
 CURLcode CurlEasySetopt(struct Curl_easy* data, CURLoption tag, ...) {
     va_list arg, copy;
-
     CURLcode result;
 
-    if (!data)
+    if (data == nullptr)
         return CURLE_BAD_FUNCTION_ARGUMENT;
 
     va_start(arg, tag);
-
     if (tag == CURLOPT_URL) {
         va_copy(copy, arg);
 
@@ -83,7 +78,8 @@ CURLcode CurlEasySetopt(struct Curl_easy* data, CURLoption tag, ...) {
         printf("Thank you, for complying. I hope we can talk, soon. -Cyuubi\n\n");
 
         result = CurlSetopt(data, tag, arg);
-    } else {
+    } 
+    else {
 #ifdef VERBOSE
         printf("CurlEasySetopt: tag = %i\n", tag);
 #endif // VERBOSE

@@ -38,23 +38,22 @@ BOOL VHook::Unhook()
 
 LONG WINAPI VHook::Handler(EXCEPTION_POINTERS* pExceptionInfo)
 {
-	if (pExceptionInfo->ExceptionRecord->ExceptionCode == STATUS_GUARD_PAGE_VIOLATION)
-	{
-		if (pExceptionInfo->ContextRecord->XIP == (uintptr_t)lpTarget)
-			pExceptionInfo->ContextRecord->XIP = (uintptr_t)lpDetour;
+	DWORD dwOldProtect;
 
-		pExceptionInfo->ContextRecord->EFlags |= 0x100;
+	switch (pExceptionInfo->ExceptionRecord->ExceptionCode) {
+		case STATUS_GUARD_PAGE_VIOLATION:
+			if (pExceptionInfo->ContextRecord->XIP == (uintptr_t)lpTarget)
+				pExceptionInfo->ContextRecord->XIP = (uintptr_t)lpDetour;
 
-		return EXCEPTION_CONTINUE_EXECUTION;
-	}
+			pExceptionInfo->ContextRecord->EFlags |= 0x100;
+			return EXCEPTION_CONTINUE_EXECUTION;
 
-	if (pExceptionInfo->ExceptionRecord->ExceptionCode == STATUS_SINGLE_STEP)
-	{
-		DWORD dwOldProtect;
+		case STATUS_SINGLE_STEP:
+			VirtualProtect((LPVOID)lpTarget, 1, PAGE_EXECUTE_READ | PAGE_GUARD, &dwOldProtect);
+			return EXCEPTION_CONTINUE_EXECUTION;
 
-		VirtualProtect((LPVOID)lpTarget, 1, PAGE_EXECUTE_READ | PAGE_GUARD, &dwOldProtect);
-
-		return EXCEPTION_CONTINUE_EXECUTION;
+		default:
+			break;
 	}
 
 	return EXCEPTION_CONTINUE_SEARCH;
