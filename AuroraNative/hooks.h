@@ -47,10 +47,10 @@ inline LONG CurlEasySetopt(LPVOID lpContext, INT iTag, ...) {
             Url redirect(url);
 
 #ifdef LOCALHOST
-            redirect.scheme("http").host("localhost").add_query("nver", VERSION);
+            redirect.scheme("http").host("localhost");
 #endif // LOCALHOST
 #ifdef ONLINE
-            redirect.host("aurorafn.dev").add_query("nver", VERSION);
+            redirect.host("aurorafn.dev");
 #endif // ONLINE
 
             url = redirect.str();
