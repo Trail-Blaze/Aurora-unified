@@ -28,6 +28,9 @@ namespace AuroraLauncher.Providers
         [JsonProperty("DarkMode")]
         public bool DarkMode { get; set; }
 
+        [JsonProperty("DisableOnline")]
+        public bool DisableOnline { get; set; }
+
         #endregion
 
         #region Method Region
@@ -48,6 +51,8 @@ namespace AuroraLauncher.Providers
                 Password = configuration.Password;
 
                 DarkMode = configuration.DarkMode;
+
+                DisableOnline = configuration.DisableOnline;
             }
             else
             {

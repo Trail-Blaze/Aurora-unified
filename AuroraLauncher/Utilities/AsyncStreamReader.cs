@@ -58,11 +58,13 @@ class AsyncStreamReader
     {
         if (_reader != null)
         {
-            int count = _reader.BaseStream.EndRead(result);
-            string value = null;
+            var count = _reader.BaseStream.EndRead(result);
+            var value = string.Empty;
 
-            if (count > 0) value = _reader.CurrentEncoding.GetString(_buffer, 0, count);
-            else Active = false;
+            if (count > 0)
+                value = _reader.CurrentEncoding.GetString(_buffer, 0, count);
+            else
+                Active = false;
 
             ValueRecieved?.Invoke(this, value);
 

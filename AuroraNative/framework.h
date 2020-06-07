@@ -10,9 +10,3 @@
 #include <sstream>
 #include <string>
 #include <map>
-
-#include "util.h"
-#include "hook.h"
-
-#include "curl.h"
-#include "url.hpp"

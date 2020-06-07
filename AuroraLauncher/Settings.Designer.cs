@@ -28,32 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.materialLabelComingSoon = new MaterialSkin.Controls.MaterialLabel();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Settings));
+            this.materialLabelWarning = new MaterialSkin.Controls.MaterialLabel();
             this.materialRaisedButtonSave = new MaterialSkin.Controls.MaterialRaisedButton();
             this.materialSingleLineTextFieldInstallLocation = new MaterialSkin.Controls.MaterialSingleLineTextField();
             this.materialLabelInstallLocation = new MaterialSkin.Controls.MaterialLabel();
-            this.materialFlatButtonBrowse = new MaterialSkin.Controls.MaterialFlatButton();
-            this.materialRaisedButtonReset = new MaterialSkin.Controls.MaterialRaisedButton();
-            this.folderBrowserDialogBrowse = new System.Windows.Forms.FolderBrowserDialog();
-            this.materialRadioButtonDark = new MaterialSkin.Controls.MaterialRadioButton();
-            this.materialRadioButtonLight = new MaterialSkin.Controls.MaterialRadioButton();
+            this.materialFlatButtonInstallLocationBrowse = new MaterialSkin.Controls.MaterialFlatButton();
+            this.materialRaisedButtonInstallLocationReset = new MaterialSkin.Controls.MaterialRaisedButton();
+            this.folderBrowserDialogInstallLocationBrowse = new System.Windows.Forms.FolderBrowserDialog();
+            this.materialRadioButtonThemeDark = new MaterialSkin.Controls.MaterialRadioButton();
+            this.materialRadioButtonThemeLight = new MaterialSkin.Controls.MaterialRadioButton();
             this.materialLabelTheme = new MaterialSkin.Controls.MaterialLabel();
             this.materialSingleLineTextFieldArguments = new MaterialSkin.Controls.MaterialSingleLineTextField();
             this.materialLabelArguments = new MaterialSkin.Controls.MaterialLabel();
+            this.materialLabelComingSoon = new MaterialSkin.Controls.MaterialLabel();
             this.SuspendLayout();
             // 
-            // materialLabelComingSoon
+            // materialLabelWarning
             // 
-            this.materialLabelComingSoon.AutoSize = true;
-            this.materialLabelComingSoon.Depth = 0;
-            this.materialLabelComingSoon.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabelComingSoon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabelComingSoon.Location = new System.Drawing.Point(12, 292);
-            this.materialLabelComingSoon.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabelComingSoon.Name = "materialLabelComingSoon";
-            this.materialLabelComingSoon.Size = new System.Drawing.Size(383, 19);
-            this.materialLabelComingSoon.TabIndex = 0;
-            this.materialLabelComingSoon.Text = "NOTE: More coming soon, including Anti-Cheat options!";
+            this.materialLabelWarning.AutoSize = true;
+            this.materialLabelWarning.Depth = 0;
+            this.materialLabelWarning.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabelWarning.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabelWarning.Location = new System.Drawing.Point(12, 289);
+            this.materialLabelWarning.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabelWarning.Name = "materialLabelWarning";
+            this.materialLabelWarning.Size = new System.Drawing.Size(371, 19);
+            this.materialLabelWarning.TabIndex = 0;
+            this.materialLabelWarning.Text = "WARNING: Do not share your \"Configuration.json\" file!";
             // 
             // materialRaisedButtonSave
             // 
@@ -96,69 +98,69 @@
             this.materialLabelInstallLocation.TabIndex = 3;
             this.materialLabelInstallLocation.Text = "Install Location:";
             // 
-            // materialFlatButtonBrowse
+            // materialFlatButtonInstallLocationBrowse
             // 
-            this.materialFlatButtonBrowse.AutoSize = true;
-            this.materialFlatButtonBrowse.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.materialFlatButtonBrowse.Depth = 0;
-            this.materialFlatButtonBrowse.Location = new System.Drawing.Point(464, 75);
-            this.materialFlatButtonBrowse.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.materialFlatButtonBrowse.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialFlatButtonBrowse.Name = "materialFlatButtonBrowse";
-            this.materialFlatButtonBrowse.Primary = false;
-            this.materialFlatButtonBrowse.Size = new System.Drawing.Size(23, 36);
-            this.materialFlatButtonBrowse.TabIndex = 4;
-            this.materialFlatButtonBrowse.Text = "...";
-            this.materialFlatButtonBrowse.UseVisualStyleBackColor = true;
-            this.materialFlatButtonBrowse.Click += new System.EventHandler(this.materialFlatButtonBrowse_Click);
+            this.materialFlatButtonInstallLocationBrowse.AutoSize = true;
+            this.materialFlatButtonInstallLocationBrowse.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.materialFlatButtonInstallLocationBrowse.Depth = 0;
+            this.materialFlatButtonInstallLocationBrowse.Location = new System.Drawing.Point(464, 75);
+            this.materialFlatButtonInstallLocationBrowse.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
+            this.materialFlatButtonInstallLocationBrowse.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialFlatButtonInstallLocationBrowse.Name = "materialFlatButtonInstallLocationBrowse";
+            this.materialFlatButtonInstallLocationBrowse.Primary = false;
+            this.materialFlatButtonInstallLocationBrowse.Size = new System.Drawing.Size(23, 36);
+            this.materialFlatButtonInstallLocationBrowse.TabIndex = 4;
+            this.materialFlatButtonInstallLocationBrowse.Text = "...";
+            this.materialFlatButtonInstallLocationBrowse.UseVisualStyleBackColor = true;
+            this.materialFlatButtonInstallLocationBrowse.Click += new System.EventHandler(this.materialFlatButtonInstallLocationBrowse_Click);
             // 
-            // materialRaisedButtonReset
+            // materialRaisedButtonInstallLocationReset
             // 
-            this.materialRaisedButtonReset.Depth = 0;
-            this.materialRaisedButtonReset.Location = new System.Drawing.Point(382, 108);
-            this.materialRaisedButtonReset.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialRaisedButtonReset.Name = "materialRaisedButtonReset";
-            this.materialRaisedButtonReset.Primary = true;
-            this.materialRaisedButtonReset.Size = new System.Drawing.Size(75, 23);
-            this.materialRaisedButtonReset.TabIndex = 5;
-            this.materialRaisedButtonReset.Text = "Reset";
-            this.materialRaisedButtonReset.UseVisualStyleBackColor = true;
-            this.materialRaisedButtonReset.Click += new System.EventHandler(this.materialRaisedButtonReset_Click);
+            this.materialRaisedButtonInstallLocationReset.Depth = 0;
+            this.materialRaisedButtonInstallLocationReset.Location = new System.Drawing.Point(382, 108);
+            this.materialRaisedButtonInstallLocationReset.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialRaisedButtonInstallLocationReset.Name = "materialRaisedButtonInstallLocationReset";
+            this.materialRaisedButtonInstallLocationReset.Primary = true;
+            this.materialRaisedButtonInstallLocationReset.Size = new System.Drawing.Size(75, 23);
+            this.materialRaisedButtonInstallLocationReset.TabIndex = 5;
+            this.materialRaisedButtonInstallLocationReset.Text = "Reset";
+            this.materialRaisedButtonInstallLocationReset.UseVisualStyleBackColor = true;
+            this.materialRaisedButtonInstallLocationReset.Click += new System.EventHandler(this.materialRaisedButtonInstallLocationReset_Click);
             // 
-            // materialRadioButtonDark
+            // materialRadioButtonThemeDark
             // 
-            this.materialRadioButtonDark.AutoSize = true;
-            this.materialRadioButtonDark.Depth = 0;
-            this.materialRadioButtonDark.Font = new System.Drawing.Font("Roboto", 10F);
-            this.materialRadioButtonDark.Location = new System.Drawing.Point(74, 107);
-            this.materialRadioButtonDark.Margin = new System.Windows.Forms.Padding(0);
-            this.materialRadioButtonDark.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.materialRadioButtonDark.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialRadioButtonDark.Name = "materialRadioButtonDark";
-            this.materialRadioButtonDark.Ripple = true;
-            this.materialRadioButtonDark.Size = new System.Drawing.Size(57, 30);
-            this.materialRadioButtonDark.TabIndex = 6;
-            this.materialRadioButtonDark.TabStop = true;
-            this.materialRadioButtonDark.Text = "Dark";
-            this.materialRadioButtonDark.UseVisualStyleBackColor = true;
-            this.materialRadioButtonDark.CheckedChanged += new System.EventHandler(this.materialRadioButtonDark_CheckedChanged);
+            this.materialRadioButtonThemeDark.AutoSize = true;
+            this.materialRadioButtonThemeDark.Depth = 0;
+            this.materialRadioButtonThemeDark.Font = new System.Drawing.Font("Roboto", 10F);
+            this.materialRadioButtonThemeDark.Location = new System.Drawing.Point(74, 107);
+            this.materialRadioButtonThemeDark.Margin = new System.Windows.Forms.Padding(0);
+            this.materialRadioButtonThemeDark.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.materialRadioButtonThemeDark.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialRadioButtonThemeDark.Name = "materialRadioButtonThemeDark";
+            this.materialRadioButtonThemeDark.Ripple = true;
+            this.materialRadioButtonThemeDark.Size = new System.Drawing.Size(57, 30);
+            this.materialRadioButtonThemeDark.TabIndex = 6;
+            this.materialRadioButtonThemeDark.TabStop = true;
+            this.materialRadioButtonThemeDark.Text = "Dark";
+            this.materialRadioButtonThemeDark.UseVisualStyleBackColor = true;
+            this.materialRadioButtonThemeDark.CheckedChanged += new System.EventHandler(this.materialRadioButtonThemeDark_CheckedChanged);
             // 
-            // materialRadioButtonLight
+            // materialRadioButtonThemeLight
             // 
-            this.materialRadioButtonLight.AutoSize = true;
-            this.materialRadioButtonLight.Depth = 0;
-            this.materialRadioButtonLight.Font = new System.Drawing.Font("Roboto", 10F);
-            this.materialRadioButtonLight.Location = new System.Drawing.Point(131, 107);
-            this.materialRadioButtonLight.Margin = new System.Windows.Forms.Padding(0);
-            this.materialRadioButtonLight.MouseLocation = new System.Drawing.Point(-1, -1);
-            this.materialRadioButtonLight.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialRadioButtonLight.Name = "materialRadioButtonLight";
-            this.materialRadioButtonLight.Ripple = true;
-            this.materialRadioButtonLight.Size = new System.Drawing.Size(60, 30);
-            this.materialRadioButtonLight.TabIndex = 7;
-            this.materialRadioButtonLight.TabStop = true;
-            this.materialRadioButtonLight.Text = "Light";
-            this.materialRadioButtonLight.UseVisualStyleBackColor = true;
+            this.materialRadioButtonThemeLight.AutoSize = true;
+            this.materialRadioButtonThemeLight.Depth = 0;
+            this.materialRadioButtonThemeLight.Font = new System.Drawing.Font("Roboto", 10F);
+            this.materialRadioButtonThemeLight.Location = new System.Drawing.Point(139, 107);
+            this.materialRadioButtonThemeLight.Margin = new System.Windows.Forms.Padding(0);
+            this.materialRadioButtonThemeLight.MouseLocation = new System.Drawing.Point(-1, -1);
+            this.materialRadioButtonThemeLight.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialRadioButtonThemeLight.Name = "materialRadioButtonThemeLight";
+            this.materialRadioButtonThemeLight.Ripple = true;
+            this.materialRadioButtonThemeLight.Size = new System.Drawing.Size(60, 30);
+            this.materialRadioButtonThemeLight.TabIndex = 7;
+            this.materialRadioButtonThemeLight.TabStop = true;
+            this.materialRadioButtonThemeLight.Text = "Light";
+            this.materialRadioButtonThemeLight.UseVisualStyleBackColor = true;
             // 
             // materialLabelTheme
             // 
@@ -201,22 +203,37 @@
             this.materialLabelArguments.TabIndex = 10;
             this.materialLabelArguments.Text = "Arguments:";
             // 
+            // materialLabelComingSoon
+            // 
+            this.materialLabelComingSoon.AutoSize = true;
+            this.materialLabelComingSoon.Depth = 0;
+            this.materialLabelComingSoon.Font = new System.Drawing.Font("Roboto", 11F);
+            this.materialLabelComingSoon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.materialLabelComingSoon.Location = new System.Drawing.Point(12, 142);
+            this.materialLabelComingSoon.MouseState = MaterialSkin.MouseState.HOVER;
+            this.materialLabelComingSoon.Name = "materialLabelComingSoon";
+            this.materialLabelComingSoon.Size = new System.Drawing.Size(336, 19);
+            this.materialLabelComingSoon.TabIndex = 11;
+            this.materialLabelComingSoon.Text = "More coming soon, including Anti-Cheat options.";
+            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(500, 320);
+            this.Controls.Add(this.materialLabelComingSoon);
             this.Controls.Add(this.materialLabelArguments);
             this.Controls.Add(this.materialSingleLineTextFieldArguments);
             this.Controls.Add(this.materialLabelTheme);
-            this.Controls.Add(this.materialRadioButtonLight);
-            this.Controls.Add(this.materialRadioButtonDark);
-            this.Controls.Add(this.materialRaisedButtonReset);
-            this.Controls.Add(this.materialFlatButtonBrowse);
+            this.Controls.Add(this.materialRadioButtonThemeLight);
+            this.Controls.Add(this.materialRadioButtonThemeDark);
+            this.Controls.Add(this.materialRaisedButtonInstallLocationReset);
+            this.Controls.Add(this.materialFlatButtonInstallLocationBrowse);
             this.Controls.Add(this.materialLabelInstallLocation);
             this.Controls.Add(this.materialSingleLineTextFieldInstallLocation);
             this.Controls.Add(this.materialRaisedButtonSave);
-            this.Controls.Add(this.materialLabelComingSoon);
+            this.Controls.Add(this.materialLabelWarning);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Settings";
             this.Sizable = false;
@@ -229,17 +246,18 @@
 
         #endregion
 
-        private MaterialSkin.Controls.MaterialLabel materialLabelComingSoon;
+        private MaterialSkin.Controls.MaterialLabel materialLabelWarning;
         private MaterialSkin.Controls.MaterialRaisedButton materialRaisedButtonSave;
         private MaterialSkin.Controls.MaterialSingleLineTextField materialSingleLineTextFieldInstallLocation;
         private MaterialSkin.Controls.MaterialLabel materialLabelInstallLocation;
-        private MaterialSkin.Controls.MaterialFlatButton materialFlatButtonBrowse;
-        private MaterialSkin.Controls.MaterialRaisedButton materialRaisedButtonReset;
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialogBrowse;
-        private MaterialSkin.Controls.MaterialRadioButton materialRadioButtonDark;
-        private MaterialSkin.Controls.MaterialRadioButton materialRadioButtonLight;
+        private MaterialSkin.Controls.MaterialFlatButton materialFlatButtonInstallLocationBrowse;
+        private MaterialSkin.Controls.MaterialRaisedButton materialRaisedButtonInstallLocationReset;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialogInstallLocationBrowse;
+        private MaterialSkin.Controls.MaterialRadioButton materialRadioButtonThemeDark;
+        private MaterialSkin.Controls.MaterialRadioButton materialRadioButtonThemeLight;
         private MaterialSkin.Controls.MaterialLabel materialLabelTheme;
         private MaterialSkin.Controls.MaterialSingleLineTextField materialSingleLineTextFieldArguments;
         private MaterialSkin.Controls.MaterialLabel materialLabelArguments;
+        private MaterialSkin.Controls.MaterialLabel materialLabelComingSoon;
     }
 }

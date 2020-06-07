@@ -10,8 +10,4 @@
     <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\AuroraCommon\AuroraCommon.csproj" />
-  </ItemGroup>
-
 </Project>

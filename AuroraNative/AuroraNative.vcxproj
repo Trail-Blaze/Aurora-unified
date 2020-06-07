@@ -78,7 +78,7 @@
       <PreprocessorDefinitions>NDEBUG;AURORANATIVE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <Optimization>Full</Optimization>
+      <Optimization>MaxSpeed</Optimization>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -87,18 +87,20 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
     </Link>
+    <PostBuildEvent>
+      <Command>"$(SolutionDir)Tools\upx.exe" --brute "$(TargetPath)"
+xcopy "$(TargetPath)" "$(SolutionDir)Build\" /F /I /R /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="build.h" />
-    <ClInclude Include="curl.h" />
-    <ClInclude Include="curlver.h" />
+    <ClInclude Include="hooks.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="string.hpp" />
     <ClInclude Include="url.hpp" />
     <ClInclude Include="util.h" />
     <ClInclude Include="hook.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="system.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -27,13 +25,18 @@ namespace AuroraLauncher
 #endif // GUI
         static void Main(string[] args)
         {
+            var formattedArguments = string.Join(" ", args);
+
 #if GUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Gui());
-#else
-            var formattedArguments = string.Join(" ", args);
 
+            // Check if -NOSTALGIA exists in args (regardless of case) to run the old GUI.
+            if (!formattedArguments.ToUpper().Contains("-NOSTALGIA"))
+                Application.Run(new Gui());
+            else
+                Application.Run(new OldGui());
+#else
             // Check if -FORCEBE exists in args (regardless of case) to force BattlEye.
             if (formattedArguments.ToUpper().Contains("-FORCEBE"))
             {
@@ -51,25 +54,25 @@ namespace AuroraLauncher
             }
 
             if (_clientAnticheat == 0) // None
-                formattedArguments += $" {Configuration.ClientArguments} -noeac -nobe -fltoken=none";
+                formattedArguments += $" {Build.ClientArguments} -noeac -nobe -fltoken=none";
             else if (_clientAnticheat == 1) // BattlEye
-                formattedArguments += $" {Configuration.ClientArguments} -noeac -fromfl=be -fltoken={Configuration.BEToken}";
+                formattedArguments += $" {Build.ClientArguments} -noeac -fromfl=be -fltoken={Build.BeToken}";
             else if (_clientAnticheat == 2) // EasyAntiCheat
-                formattedArguments += $" {Configuration.ClientArguments} -nobe -fromfl=eac -fltoken={Configuration.EACToken}";
+                formattedArguments += $" {Build.ClientArguments} -nobe -fromfl=eac -fltoken={Build.EacToken}";
 
 #if !NATIVE
             Win32.AllocConsole();
 #endif // NATIVE
 
             // Check if the client exists in the current work path, if it doesn't, just exit.
-            if (!File.Exists(Configuration.ClientExecutable))
+            if (!File.Exists(Build.ClientExecutable))
             {
 #if NATIVE
                 Win32.AllocConsole();
 #endif // NATIVE
 
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"\"{Configuration.ClientExecutable}\" was not found, please make sure it exists.");
+                Console.WriteLine($"\"{Build.ClientExecutable}\" was not found, please make sure it exists.");
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.ReadKey();
 
@@ -78,12 +81,12 @@ namespace AuroraLauncher
 
 #if NATIVE
             // Check if the native exists in the current work path, if it doesn't, just exit.
-            if (!File.Exists(Configuration.ClientNative))
+            if (!File.Exists(Build.ClientNative))
             {
                 Win32.AllocConsole();
 
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"\"{Configuration.ClientNative}\" was not found, please make sure it exists.");
+                Console.WriteLine($"\"{Build.ClientNative}\" was not found, please make sure it exists.");
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.ReadKey();
 
@@ -92,14 +95,15 @@ namespace AuroraLauncher
 #endif // NATIVE
 
 #if !NATIVE
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("AuroraLauncher by Cyuubi");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("Aurora, made with <3 by Cyuubi and Slushia.");
+            Console.WriteLine("Discord: https://discord.gg/aurorafn\n");
             Console.ForegroundColor = ConsoleColor.Gray;
 #endif // NATIVE
 
             _clientProcess = new Process
             {
-                StartInfo = new ProcessStartInfo(Configuration.ClientExecutable, formattedArguments)
+                StartInfo = new ProcessStartInfo(Build.ClientExecutable, formattedArguments)
                 {
                     UseShellExecute = false,
 
@@ -131,19 +135,7 @@ namespace AuroraLauncher
 
             reader.Start();
 #else
-            var clientHandle = Win32.OpenProcess(Win32.PROCESS_CREATE_THREAD | Win32.PROCESS_QUERY_INFORMATION |
-                Win32.PROCESS_VM_OPERATION | Win32.PROCESS_VM_WRITE | Win32.PROCESS_VM_READ, false, _clientProcess.Id);
-
-            var loadLibrary = Win32.GetProcAddress(Win32.GetModuleHandle("kernel32.dll"), "LoadLibraryA");
-
-            var size = (uint)((Configuration.ClientNative.Length + 1) * Marshal.SizeOf(typeof(char)));
-            var address = Win32.VirtualAllocEx(clientHandle, IntPtr.Zero,
-                size, Win32.MEM_COMMIT | Win32.MEM_RESERVE, Win32.PAGE_READWRITE);
-
-            Win32.WriteProcessMemory(clientHandle, address,
-                Encoding.Default.GetBytes(Configuration.ClientNative), size, out UIntPtr bytesWritten);
-
-            Win32.CreateRemoteThread(clientHandle, IntPtr.Zero, 0, loadLibrary, address, 0, IntPtr.Zero);
+            Helper.InjectDll(_clientProcess.Id, Build.ClientNative);
 #endif // NATIVE
 
             _clientProcess.WaitForExit(); // Wait for the client process to exit.

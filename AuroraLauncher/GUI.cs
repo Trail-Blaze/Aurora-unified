@@ -6,9 +6,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Net.Mail;
 using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace AuroraLauncher
@@ -21,7 +20,12 @@ namespace AuroraLauncher
 
         Settings _settings;
 
-        bool _showedOutOfDate;
+        Thread _commonHeartbeat;
+        Thread _onlineHeartbeat;
+
+        bool _onlinePaused;
+
+        bool _showedUpdate;
 
         Process _clientProcess;
         /// <summary>
@@ -42,51 +46,178 @@ namespace AuroraLauncher
             // Settings form manages SkinManager
             _settings = new Settings(this);
 
-#if ONLINE
-            Text += $" ({new Uri(Build.LauncherUrl).Host})";
-#endif
+            Text += $" [{App.Version}]";
 
             materialSingleLineTextFieldEmail.Text = Configuration.Email;
             materialSingleLineTextFieldPassword.Text = Configuration.Password;
 
-            timerHeartbeat.Enabled = true;
-            timerHeartbeat_Tick(null, null);
+            _commonHeartbeat = new Thread(new ThreadStart(CommonHeartbeat));
+            _commonHeartbeat.IsBackground = true;
 
-#if false
-            //materialLabelOnline.Visible = true;
+            _commonHeartbeat.Start();
 
-            CheckForUpdates();
+#if ONLINE
+            if (!Configuration.DisableOnline)
+            {
+                _onlineHeartbeat = new Thread(new ThreadStart(OnlineHeartbeat));
+                _onlineHeartbeat.IsBackground = true;
 
-            materialLabelUpdate.Visible = true;
+                _onlineHeartbeat.Start();
+
+                materialLabelOnline.Visible = true;
+            }
+
+            CheckUpdates();
 #endif
         }
 
-        bool CheckForUpdates(string source = "")
-        {
-            var isUpToDate = Launcher.IsUpToDate;
+        delegate void SetOnlineTextDelegate(string text);
 
-            if (isUpToDate)
-                materialLabelUpdate.Text = $"Aurora Launcher is up-to-date! ({App.Version})";
+        void SetOnlineText(string text)
+        {
+            if (InvokeRequired)
+            {
+                var method = new SetOnlineTextDelegate(SetOnlineText);
+
+                Invoke(method, new object[] { text });
+            }
             else
+                materialLabelOnline.Text = text;
+        }
+
+        delegate void SetShowDelegate();
+
+        void SetShow()
+        {
+            if (InvokeRequired)
+            {
+                var method = new SetShowDelegate(SetShow);
+
+                Invoke(method);
+            }
+            else
+                Show();
+        }
+
+        delegate void SetHideDelegate();
+
+        void SetHide()
+        {
+            if (InvokeRequired)
+            {
+                var method = new SetHideDelegate(SetHide);
+
+                Invoke(method);
+            }
+            else
+                Hide();
+        }
+
+        void CommonHeartbeat()
+        {
+            while (true)
+            {
+                if (IsHandleCreated)
+                {
+                    if (_clientProcess != null)
+                    {
+                        if (!_clientProcess.HasExited)
+                        {
+                            _onlinePaused = true;
+
+                            SetHide();
+                        }
+                        else
+                            _clientProcess = null; // TODO: Probably a dumb hack?
+                    }
+                    else
+                    {
+                        _onlinePaused = false;
+
+                        SetShow();
+                    }
+
+                    Thread.Sleep(2000);
+                }
+
+                Thread.Sleep(1);
+            }
+        }
+
+        void OnlineHeartbeat()
+        {
+            while (true)
+            {
+                if (IsHandleCreated && !_onlinePaused)
+                {
+                    SetOnlineText($"Online: {Api.Clients}, Parties: {Api.Parties}");
+
+                    Thread.Sleep(4000);
+                }
+
+                Thread.Sleep(1);
+            }
+        }
+
+        bool CheckUpdates(string source = "")
+        {
+            var isNotUpToDate = !Launcher.IsUpToDate;
+            if (isNotUpToDate)
             {
                 if (source != "Launch")
                 {
-                    if (!_showedOutOfDate)
-                        _showedOutOfDate = true;
+                    if (!_showedUpdate)
+                        _showedUpdate = true;
                 }
 
-                materialLabelUpdate.Text =
-                    $"Aurora Launcher is out-of-date! ({Api.Version})" +
-                    "\n\n" +
-                    "You must update in order to launch Fortnite!";
-
+                materialLabelUpdate.Visible = true;
                 materialRaisedButtonLaunch.Text = "Update";
             }
 
-            return !isUpToDate;
+            return isNotUpToDate;
         }
 
-        bool IsValidPath(string path)
+        private void materialSingleLineTextFieldEmail_TextChanged(object sender, EventArgs e)
+        {
+            // Dumb programming, 2020.
+
+            Configuration.Email = materialSingleLineTextFieldEmail.Text;
+            Configuration.Save();
+        }
+
+        private void materialSingleLineTextFieldPassword_TextChanged(object sender, EventArgs e)
+        {
+            Configuration.Password = materialSingleLineTextFieldPassword.Text;
+            Configuration.Save();
+        }
+
+        private void materialRaisedButtonPasswordView_Click(object sender, EventArgs e)
+        {
+            materialSingleLineTextFieldPassword.UseSystemPasswordChar =
+                !materialSingleLineTextFieldPassword.UseSystemPasswordChar;
+
+            if (materialSingleLineTextFieldPassword.UseSystemPasswordChar)
+                materialRaisedButtonPasswordView.Text = "Show";
+            else
+                materialRaisedButtonPasswordView.Text = "Hide";
+        }
+
+        void DiscordClick()
+        {
+            Process.Start("https://discord.gg/AuroraFN");
+        }
+
+        private void pictureBoxDiscord_Click(object sender, EventArgs e)
+        {
+            DiscordClick();
+        }
+
+        private void materialFlatButtonDiscord_Click(object sender, EventArgs e)
+        {
+            DiscordClick();
+        }
+
+        public static bool IsValidPath(string path)
         {
             var drive = new Regex(@"^[a-zA-Z]:\\$");
             if (!drive.IsMatch(path.Substring(0, 3)))
@@ -95,7 +226,7 @@ namespace AuroraLauncher
             var invalidCharacters = new string(Path.GetInvalidPathChars());
             invalidCharacters += @":/?*" + "\"";
 
-            var badCharacter = new Regex("[" + Regex.Escape(invalidCharacters) + "]");
+            var badCharacter = new Regex($"[{Regex.Escape(invalidCharacters)}]");
             if (badCharacter.IsMatch(path.Substring(3, path.Length - 3)))
                 return false;
 
@@ -118,23 +249,23 @@ namespace AuroraLauncher
 
         private void materialRaisedButtonLaunch_Click(object sender, EventArgs e)
         {
-#if false
-            if (CheckForUpdates("Launch"))
+#if ONLINE
+            if (CheckUpdates("Launch"))
             {
-                // Check if we previously showed that we were out-of-date.
-                if (!_showedOutOfDate)
+                // Check if we previously showed that we required an update.
+                if (!_showedUpdate)
                 {
-                    DialogResult result = MessageBox.Show("Aurora Launcher is out-of-date, you must update in order to launch Fortnite!", string.Empty,
+                    var result = MessageBox.Show("You must update Aurora Launcher to launch Fortnite.", string.Empty,
                         MessageBoxButtons.OKCancel);
 
                     if (result == DialogResult.Cancel)
                     {
-                        _showedOutOfDate = true;
+                        _showedUpdate = true;
                         return;
                     }
                 }
 
-                Process.Start(Build.LauncherUrl);
+                Process.Start(Build.LauncherUri);
                 return;
             }
 #endif
@@ -180,43 +311,41 @@ namespace AuroraLauncher
             }
 
             var clientPath = Path.Combine(Configuration.InstallLocation, $"FortniteGame\\Binaries\\Win64\\{Build.ClientExecutable}");
-
             if (!File.Exists(clientPath))
             {
-                var text = $"\"{clientPath}\" was not found, please make sure it exists." + "\n\n" +
+                var text =
+                    $"\"{clientPath}\" was not found, please make sure it exists." + "\n\n" +
                     "Did you set the Install Location correctly?" + "\n\n" +
-                    "NOTE: The Install Location must be set to a folder that contains 2 folders named \"Engine\" and \"FortniteGame\".";
+                    "TIP: The Install Location must be set to a folder that contains 2 folders named \"Engine\" and \"FortniteGame\".";
 
                 MessageBox.Show(text, string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            var nativePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), Build.ClientNative);
-
+            var nativePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), Build.LauncherNative);
             if (!File.Exists(nativePath))
             {
-                var text = $"\"{nativePath}\" was not found, please make sure it exists." + "\n\n" +
-                    "Did you extract all files from the ZIP when you downloaded the Launcher?" + "\n\n" +
-                    $"NOTE: \"{Build.ClientNative}\" must be in the same directory as the Launcher executable.";
+                var text =
+                    $"\"{nativePath}\" was not found, please make sure it exists." + "\n\n" +
+                    "Did you extract all files from the ZIP when you downloaded Aurora Launcher?" + "\n\n" +
+                    $"TIP: \"{Build.LauncherNative}\" must be in the same directory as Aurora Launcher.";
 
                 MessageBox.Show(text, string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            var formattedArguments = $"-AUTH_LOGIN={Configuration.Email} -AUTH_PASSWORD={Configuration.Password} -AUTH_TYPE=epic ";
-
-            formattedArguments += Configuration.Arguments;
+            var arguments = $"-AUTH_LOGIN={Configuration.Email} -AUTH_PASSWORD={Configuration.Password} -AUTH_TYPE=epic " + Configuration.Arguments;
 
             if (_clientAnticheat == 0) // None
-                formattedArguments += $" {Build.ClientArguments} -noeac -nobe -fltoken=none";
+                arguments += $" {Build.ClientArguments} -noeac -nobe -fltoken=none";
             else if (_clientAnticheat == 1) // BattlEye
-                formattedArguments += $" {Build.ClientArguments} -noeac -fromfl=be -fltoken={Build.BEToken}";
+                arguments += $" {Build.ClientArguments} -noeac -fromfl=be -fltoken={Build.BeToken}";
             else if (_clientAnticheat == 2) // EasyAntiCheat
-                formattedArguments += $" {Build.ClientArguments} -nobe -fromfl=eac -fltoken={Build.EACToken}";
+                arguments += $" {Build.ClientArguments} -nobe -fromfl=eac -fltoken={Build.EacToken}";
 
             _clientProcess = new Process
             {
-                StartInfo = new ProcessStartInfo(clientPath, formattedArguments)
+                StartInfo = new ProcessStartInfo(clientPath, arguments)
                 {
                     UseShellExecute = false,
 
@@ -228,89 +357,45 @@ namespace AuroraLauncher
 
             _clientProcess.Start();
 
-            // Inject Native
+#if !NATIVE
+            // Allocate the console, for standard output.
+            Win32.AllocConsole();
 
-            var clientHandle = Win32.OpenProcess(Win32.PROCESS_CREATE_THREAD | Win32.PROCESS_QUERY_INFORMATION |
-                Win32.PROCESS_VM_OPERATION | Win32.PROCESS_VM_WRITE | Win32.PROCESS_VM_READ, false, _clientProcess.Id);
+            // Setup an AsyncStreamReader, for standard output.
+            var reader = new AsyncStreamReader(_clientProcess.StandardOutput);
 
-            var loadLibrary = Win32.GetProcAddress(Win32.GetModuleHandle("kernel32.dll"), "LoadLibraryA");
-
-            var size = (uint)((nativePath.Length + 1) * Marshal.SizeOf(typeof(char)));
-            var address = Win32.VirtualAllocEx(clientHandle, IntPtr.Zero,
-                size, Win32.MEM_COMMIT | Win32.MEM_RESERVE, Win32.PAGE_READWRITE);
-
-            Win32.WriteProcessMemory(clientHandle, address,
-                Encoding.Default.GetBytes(nativePath), size, out UIntPtr bytesWritten);
-
-            Win32.CreateRemoteThread(clientHandle, IntPtr.Zero, 0, loadLibrary, address, 0, IntPtr.Zero);
-        }
-
-        private void materialFlatButtonSettings_Click(object sender, EventArgs e)
-        {
-            // This seems kinda hacky? :S
-            if (_settings.IsDisposed)
-                _settings = new Settings(this);
-
-            _settings.StartPosition = FormStartPosition.Manual;
-            _settings.Location = Location;
-            _settings.ShowDialog();
-        }
-
-        private void materialSingleLineTextFieldEmail_TextChanged(object sender, EventArgs e)
-        {
-            // Dumb Programming 2020
-            Configuration.Email = materialSingleLineTextFieldEmail.Text;
-            Configuration.Save();
-        }
-
-        void DiscordClick()
-        {
-            Process.Start("https://discord.gg/aurorafn");
-        }
-
-        private void pictureBoxDiscord_Click(object sender, EventArgs e)
-        {
-            DiscordClick();
-        }
-
-        private void materialFlatButtonDiscord_Click(object sender, EventArgs e)
-        {
-            DiscordClick();
-        }
-
-        private void timerHeartbeat_Tick(object sender, EventArgs e)
-        {
-            // TODO: Re-add Online.
-
-            if (_clientProcess != null)
+            reader.ValueRecieved += delegate (object sender, string value)
             {
-                if (!_clientProcess.HasExited)
-                    Hide();
-                else
-                    _clientProcess = null; // TODO: Probably a dumb hack?
-            }
-            else
-                Show();
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write(value);
+                Console.ForegroundColor = ConsoleColor.Gray;
+            };
+
+            reader.Start();
+#else
+            Helper.InjectDll(_clientProcess.Id, Build.LauncherNative);
+#endif // NATIVE
         }
 
         private void materialFlatButtonInfo_Click(object sender, EventArgs e)
         {
-            var text = $"Aurora (Launcher = {App.Version}) by Cyuubi and Slushia" + "\n\n" +
+            var text =
+                "Aurora, made with <3 by Cyuubi and Slushia." + "\n\n" +
                 "If you purchased this software, you have been scammed. Please, immediately request a refund." + "\n\n" +
                 "Please join our Discord server if you experience any problems!";
 
             MessageBox.Show(text);
         }
 
-        private void materialSingleLineTextFieldPassword_TextChanged(object sender, EventArgs e)
+        private void materialFlatButtonSettings_Click(object sender, EventArgs e)
         {
-            Configuration.Password = materialSingleLineTextFieldPassword.Text;
-            Configuration.Save();
-        }
+            // This seems kinda hacky? :s
+            if (_settings.IsDisposed)
+                _settings = new Settings(this);
 
-        private void materialRaisedButtonView_Click(object sender, EventArgs e)
-        {
-            materialSingleLineTextFieldPassword.UseSystemPasswordChar = !materialSingleLineTextFieldPassword.UseSystemPasswordChar;
+            _settings.StartPosition = FormStartPosition.Manual;
+            _settings.Location = Location;
+            _settings.ShowDialog();
         }
     }
 }

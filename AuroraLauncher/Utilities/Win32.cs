@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-class Win32
+static class Win32
 {
     #region Field Region
 

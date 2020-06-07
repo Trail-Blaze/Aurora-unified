@@ -38,7 +38,7 @@ namespace AuroraLauncher.Providers
 
         static Installed GetLauncherInstalled()
         {
-            string path = Path.Combine(GetFolderPath(SpecialFolder.CommonApplicationData),
+            var path = Path.Combine(GetFolderPath(SpecialFolder.CommonApplicationData),
                 "Epic\\UnrealEngineLauncher\\LauncherInstalled.dat");
 
             if (!File.Exists(path))

@@ -13,7 +13,4 @@
       <protection id="rename" />
     </rule>
   </module>
-  <module path="MaterialSkin.dll" />
-  <module path="Newtonsoft.Json.dll" />
-  <module path="RestSharp.dll" />
 </project>

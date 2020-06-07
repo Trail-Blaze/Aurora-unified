@@ -4,18 +4,18 @@
 
 class VHook {
 private:
-	static uintptr_t lpTarget;
-	static uintptr_t lpDetour;
+	static uintptr_t pTarget;
+	static uintptr_t pDetour;
 
 	static PVOID hHandle;
 	static DWORD dwProtect;
 
 public:
-	static BOOL Hook(uintptr_t lpTarget, uintptr_t lpDetour);
+	static BOOL Hook(uintptr_t pTarget, uintptr_t pDetour);
 	static BOOL Unhook();
 
 private:
 	static LONG WINAPI Handler(EXCEPTION_POINTERS *pExceptionInfo);
 
-	static BOOL IsSamePage(const uint8_t* pAddressFirst, const uint8_t* pAddressSecond);
+	static BOOL IsSamePage(const uint8_t* pFirstAddress, const uint8_t* pSecondAddress);
 };

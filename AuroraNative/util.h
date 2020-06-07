@@ -14,6 +14,13 @@ private:
     }
 
 public:
+    static inline VOID InitConsole() {
+        AllocConsole();
+
+        FILE* pFile;
+        freopen_s(&pFile, "CONOUT$", "w", stdout);
+    }
+
     static inline PBYTE FindPattern(PVOID pBase, DWORD dwSize, LPCSTR lpPattern, LPCSTR lpMask) {
         dwSize -= static_cast<DWORD>(strlen(lpMask));
 

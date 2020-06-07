@@ -22,14 +22,14 @@ namespace AuroraLauncher
             _skinManager.AddFormToManage(this);
 
             _skinManager.Theme = _gui.Configuration.DarkMode ? MaterialSkinManager.Themes.DARK : MaterialSkinManager.Themes.LIGHT;
-            _skinManager.ColorScheme = new ColorScheme(Primary.Pink600, Primary.Pink800, Primary.Pink400, Accent.Pink200, TextShade.WHITE);
+            _skinManager.ColorScheme = new ColorScheme(Primary.Teal600, Primary.Teal800, Primary.Teal700, Accent.Teal700, TextShade.WHITE);
 
             materialSingleLineTextFieldInstallLocation.Text = _gui.Configuration.InstallLocation;
 
             if (_gui.Configuration.DarkMode)
-                materialRadioButtonDark.Checked = true;
+                materialRadioButtonThemeDark.Checked = true;
             else
-                materialRadioButtonLight.Checked = true;
+                materialRadioButtonThemeLight.Checked = true;
 
             materialSingleLineTextFieldArguments.Text = _gui.Configuration.Arguments;
         }
@@ -43,12 +43,23 @@ namespace AuroraLauncher
             _gui.Configuration.Save();
         }
 
+        private void Settings_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Save();
+        }
+
         private void materialRaisedButtonSave_Click(object sender, EventArgs e)
         {
             Save();
         }
 
-        private void materialRaisedButtonReset_Click(object sender, EventArgs e)
+        private void materialFlatButtonInstallLocationBrowse_Click(object sender, EventArgs e)
+        {
+            if (folderBrowserDialogInstallLocationBrowse.ShowDialog() == DialogResult.OK)
+                materialSingleLineTextFieldInstallLocation.Text = folderBrowserDialogInstallLocationBrowse.SelectedPath;
+        }
+
+        private void materialRaisedButtonInstallLocationReset_Click(object sender, EventArgs e)
         {
             foreach (EpicGames.Installed.Installation installation
                 in EpicGames.LauncherInstalled.InstallationList)
@@ -58,20 +69,9 @@ namespace AuroraLauncher
             }
         }
 
-        private void Settings_FormClosing(object sender, FormClosingEventArgs e)
+        private void materialRadioButtonThemeDark_CheckedChanged(object sender, EventArgs e)
         {
-            Save();
-        }
-
-        private void materialFlatButtonBrowse_Click(object sender, EventArgs e)
-        {
-            if (folderBrowserDialogBrowse.ShowDialog() == DialogResult.OK)
-                materialSingleLineTextFieldInstallLocation.Text = folderBrowserDialogBrowse.SelectedPath;
-        }
-
-        private void materialRadioButtonDark_CheckedChanged(object sender, EventArgs e)
-        {
-            _gui.Configuration.DarkMode = materialRadioButtonDark.Checked;
+            _gui.Configuration.DarkMode = materialRadioButtonThemeDark.Checked;
 
             _skinManager.Theme = _gui.Configuration.DarkMode ? MaterialSkinManager.Themes.DARK : MaterialSkinManager.Themes.LIGHT;
         }
