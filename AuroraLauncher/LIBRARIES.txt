@@ -1,0 +1,7 @@
+﻿AuroraLauncher uses the following libraries:
+- MaterialSkin
+- Newtonsoft.Json
+- RestSharp
+
+AuroraNative uses the following libraries:
+- CxxUrl
