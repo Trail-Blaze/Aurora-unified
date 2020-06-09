@@ -42,7 +42,7 @@ namespace AuroraLauncher.Providers
 
             var version = _client.Get(new RestRequest("files/version")).Content;
             if (string.IsNullOrEmpty(version))
-                version = "Offline";
+                version = App.Version;
 
             return version;
         }
