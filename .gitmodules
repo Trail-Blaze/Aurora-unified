@@ -1,0 +1,3 @@
+[submodule "bitwise"]
+	path = bitwise
+	url = https://github.com/AuroraFN/bitwise.git
