@@ -8,9 +8,15 @@ namespace AuroraLauncher
 {
     partial class Settings : MaterialForm
     {
+        #region Field Region
+
         Gui _gui;
 
         MaterialSkinManager _skinManager;
+
+        #endregion
+
+        #region Constructor Region
 
         public Settings(Gui gui)
         {
@@ -34,24 +40,20 @@ namespace AuroraLauncher
             materialSingleLineTextFieldArguments.Text = _gui.Configuration.Arguments;
         }
 
+        #endregion
+
+        #region Method Region
+
         void Save()
         {
             _gui.Configuration.InstallLocation = materialSingleLineTextFieldInstallLocation.Text;
-
             _gui.Configuration.Arguments = materialSingleLineTextFieldArguments.Text;
             
             _gui.Configuration.Save();
         }
 
-        private void Settings_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            Save();
-        }
-
-        private void materialRaisedButtonSave_Click(object sender, EventArgs e)
-        {
-            Save();
-        }
+        private void Settings_FormClosing(object sender, FormClosingEventArgs e) => Save();
+        private void materialRaisedButtonSave_Click(object sender, EventArgs e) => Save();
 
         private void materialFlatButtonInstallLocationBrowse_Click(object sender, EventArgs e)
         {
@@ -75,5 +77,7 @@ namespace AuroraLauncher
 
             _skinManager.Theme = _gui.Configuration.DarkMode ? MaterialSkinManager.Themes.DARK : MaterialSkinManager.Themes.LIGHT;
         }
+
+        #endregion
     }
 }

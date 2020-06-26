@@ -1,6 +1,8 @@
-#pragma once
+#ifndef HOOK_H
+#define HOOK_H
 
-#include "pch.h"
+#include <Windows.h>
+#include <inttypes.h>
 
 class VHook {
 private:
@@ -19,3 +21,5 @@ private:
 
 	static BOOL IsSamePage(const uint8_t* pFirstAddress, const uint8_t* pSecondAddress);
 };
+
+#endif // HOOK_H
