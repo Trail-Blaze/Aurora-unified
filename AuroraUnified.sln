@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AuroraNative", "AuroraNativ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuroraLauncher", "AuroraLauncher\AuroraLauncher.csproj", "{C6D5E15A-5A85-4F00-BECF-854A4A54B1EC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuroraServer", "AuroraServer\AuroraServer.csproj", "{3B6D9E20-810D-4E54-9C91-BF9330C2ADE5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,14 @@ Global
 		{C6D5E15A-5A85-4F00-BECF-854A4A54B1EC}.Release|Any CPU.ActiveCfg = Release|x64
 		{C6D5E15A-5A85-4F00-BECF-854A4A54B1EC}.Release|x64.ActiveCfg = Release|x64
 		{C6D5E15A-5A85-4F00-BECF-854A4A54B1EC}.Release|x64.Build.0 = Release|x64
+		{3B6D9E20-810D-4E54-9C91-BF9330C2ADE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B6D9E20-810D-4E54-9C91-BF9330C2ADE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B6D9E20-810D-4E54-9C91-BF9330C2ADE5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3B6D9E20-810D-4E54-9C91-BF9330C2ADE5}.Debug|x64.Build.0 = Debug|Any CPU
+		{3B6D9E20-810D-4E54-9C91-BF9330C2ADE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B6D9E20-810D-4E54-9C91-BF9330C2ADE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B6D9E20-810D-4E54-9C91-BF9330C2ADE5}.Release|x64.ActiveCfg = Release|Any CPU
+		{3B6D9E20-810D-4E54-9C91-BF9330C2ADE5}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
