@@ -41,7 +41,6 @@
             this.materialLabelTheme = new MaterialSkin.Controls.MaterialLabel();
             this.materialSingleLineTextFieldArguments = new MaterialSkin.Controls.MaterialSingleLineTextField();
             this.materialLabelArguments = new MaterialSkin.Controls.MaterialLabel();
-            this.materialLabelComingSoon = new MaterialSkin.Controls.MaterialLabel();
             this.SuspendLayout();
             // 
             // materialLabelWarning
@@ -203,25 +202,11 @@
             this.materialLabelArguments.TabIndex = 10;
             this.materialLabelArguments.Text = "Arguments:";
             // 
-            // materialLabelComingSoon
-            // 
-            this.materialLabelComingSoon.AutoSize = true;
-            this.materialLabelComingSoon.Depth = 0;
-            this.materialLabelComingSoon.Font = new System.Drawing.Font("Roboto", 11F);
-            this.materialLabelComingSoon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.materialLabelComingSoon.Location = new System.Drawing.Point(12, 142);
-            this.materialLabelComingSoon.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialLabelComingSoon.Name = "materialLabelComingSoon";
-            this.materialLabelComingSoon.Size = new System.Drawing.Size(336, 19);
-            this.materialLabelComingSoon.TabIndex = 11;
-            this.materialLabelComingSoon.Text = "More coming soon, including Anti-Cheat options.";
-            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(500, 320);
-            this.Controls.Add(this.materialLabelComingSoon);
             this.Controls.Add(this.materialLabelArguments);
             this.Controls.Add(this.materialSingleLineTextFieldArguments);
             this.Controls.Add(this.materialLabelTheme);
@@ -258,6 +243,5 @@
         private MaterialSkin.Controls.MaterialLabel materialLabelTheme;
         private MaterialSkin.Controls.MaterialSingleLineTextField materialSingleLineTextFieldArguments;
         private MaterialSkin.Controls.MaterialLabel materialLabelArguments;
-        private MaterialSkin.Controls.MaterialLabel materialLabelComingSoon;
     }
 }
