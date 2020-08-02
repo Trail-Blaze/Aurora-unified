@@ -31,7 +31,7 @@ namespace AuroraLauncher
         /// <summary>
         /// 0 = None, 1 = BattlEye, 2 = EasyAntiCheat
         /// </summary>
-        int _clientAnticheat = 2; // Forced to EAC, until added into Settings.
+        int _clientAnticheat = 1; // Forced to BE, until added into Settings.
 
         public Gui()
         {
