@@ -14,8 +14,9 @@ namespace AuroraLauncher.Providers
 
         #region Property Region
 
-        [JsonProperty("InstallLocation")]
+        [JsonProperty("InstallLocation")] //required because fucking confuserex
         public string InstallLocation { get; set; }
+
         [JsonProperty("Arguments")]
         public string Arguments { get; set; }
 
@@ -34,6 +35,7 @@ namespace AuroraLauncher.Providers
 
         #region Method Region
 
+        // TODO: Add configuration file to Build.cs.
         public void Open()
         {
             if (File.Exists(_path))

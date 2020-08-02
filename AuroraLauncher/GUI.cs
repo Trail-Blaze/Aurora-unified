@@ -4,57 +4,38 @@ using MaterialSkin.Controls;
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Net;
 using System.Net.Mail;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Titanium.Web.Proxy;
-using Titanium.Web.Proxy.EventArguments;
-using Titanium.Web.Proxy.Http;
-using Titanium.Web.Proxy.Models;
 
 namespace AuroraLauncher
 {
     partial class Gui : MaterialForm
     {
-        #region Field Region
-
         MaterialSkinManager _skinManager;
 
-        Settings _settings;
+        public Configuration Configuration;
 
-        ProxyServer _proxy;
+        Settings _settings;
 
         Thread _commonHeartbeat;
         Thread _onlineHeartbeat;
 
         bool _onlinePaused;
+
         bool _showedUpdate;
 
         Process _clientProcess;
         /// <summary>
         /// 0 = None, 1 = BattlEye, 2 = EasyAntiCheat
         /// </summary>
-        int _clientAnticheat = 1; // Forced to BE, until added into Settings.
-
-        #endregion
-
-        #region Property Region
-
-        public Configuration Configuration { get; private set; }
-
-        #endregion
-
-        #region Constructor Region
+        int _clientAnticheat = 2; // Forced to EAC, until added into Settings.
 
         public Gui()
         {
             InitializeComponent();
-
-            Text += $" [{App.Version}]";
 
             _skinManager = MaterialSkinManager.Instance;
             _skinManager.AddFormToManage(this);
@@ -62,13 +43,10 @@ namespace AuroraLauncher
             Configuration = new Configuration();
             Configuration.Open();
 
+            // Settings form manages SkinManager
             _settings = new Settings(this);
 
-            _proxy = new ProxyServer();
-            _proxy.BeforeRequest += OnBeforeRequest;
-
-            _proxy.AddEndPoint(new ExplicitProxyEndPoint(IPAddress.Any, 6000, true));
-            _proxy.Start();
+            Text += $" [{App.Version}]";
 
             materialSingleLineTextFieldEmail.Text = Configuration.Email;
             materialSingleLineTextFieldPassword.Text = Configuration.Password;
@@ -91,24 +69,6 @@ namespace AuroraLauncher
 
             CheckUpdates();
 #endif
-        }
-
-        #endregion
-
-        #region Method Region
-
-        public async Task OnBeforeRequest(object sender, SessionEventArgs e)
-        {
-            Console.WriteLine(e.HttpClient.Request.Url);
-
-            if (e.HttpClient.Request.Url.Contains(".epicgames.com"))
-            {
-                var builder = new UriBuilder(e.HttpClient.Request.Url);
-
-                builder.Host = "aurorafn.dev";
-
-                e.HttpClient.Request.Url = builder.Uri.ToString();
-            }
         }
 
         delegate void SetOnlineTextDelegate(string text);
@@ -168,7 +128,7 @@ namespace AuroraLauncher
                             SetHide();
                         }
                         else
-                            _clientProcess = null; // TODO (Cyuubi): Probably a dumb hack?
+                            _clientProcess = null; // TODO: Probably a dumb hack?
                     }
                     else
                     {
@@ -242,10 +202,20 @@ namespace AuroraLauncher
                 materialRaisedButtonPasswordView.Text = "Hide";
         }
 
-        void DiscordClick() => Process.Start("https://discord.gg/AuroraFN");
+        void DiscordClick()
+        {
+            Process.Start("https://discord.gg/AuroraFN");
+        }
 
-        private void pictureBoxDiscord_Click(object sender, EventArgs e) => DiscordClick();
-        private void materialFlatButtonDiscord_Click(object sender, EventArgs e) => DiscordClick();
+        private void pictureBoxDiscord_Click(object sender, EventArgs e)
+        {
+            DiscordClick();
+        }
+
+        private void materialFlatButtonDiscord_Click(object sender, EventArgs e)
+        {
+            DiscordClick();
+        }
 
         public static bool IsValidPath(string path)
         {
@@ -318,7 +288,7 @@ namespace AuroraLauncher
                 return;
             }
 
-            // TODO (Cyuubi): Fix this?
+            // TODO: Fix this?
             if (materialSingleLineTextFieldPassword.Text.Contains(" "))
             {
                 MessageBox.Show("Invalid Password, are you sure it's correct?", string.Empty, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -364,14 +334,14 @@ namespace AuroraLauncher
                 return;
             }
 
-            var arguments = $"-AUTH_LOGIN={Configuration.Email} -AUTH_PASSWORD={Configuration.Password} -AUTH_TYPE=epic {Build.ClientArguments} {Configuration.Arguments}";
+            var arguments = $"-AUTH_LOGIN={Configuration.Email} -AUTH_PASSWORD={Configuration.Password} -AUTH_TYPE=epic " + Configuration.Arguments;
 
             if (_clientAnticheat == 0) // None
-                arguments += $" -noeac -nobe -fltoken=none";
+                arguments += $" {Build.ClientArguments} -noeac -nobe -fltoken=none";
             else if (_clientAnticheat == 1) // BattlEye
-                arguments += $" -noeac -fromfl=be -fltoken={Build.BeToken}";
+                arguments += $" {Build.ClientArguments} -noeac -fromfl=be -fltoken={Build.BeToken}";
             else if (_clientAnticheat == 2) // EasyAntiCheat
-                arguments += $" -nobe -fromfl=eac -fltoken={Build.EacToken}";
+                arguments += $" {Build.ClientArguments} -nobe -fromfl=eac -fltoken={Build.EacToken}";
 
             _clientProcess = new Process
             {
@@ -403,7 +373,7 @@ namespace AuroraLauncher
 
             reader.Start();
 #else
-            Helper.InjectDll(_clientProcess.Id, nativePath);
+            Helper.InjectDll(_clientProcess.Id, Build.LauncherNative);
 #endif // NATIVE
         }
 
@@ -427,7 +397,5 @@ namespace AuroraLauncher
             _settings.Location = Location;
             _settings.ShowDialog();
         }
-
-        #endregion
     }
 }

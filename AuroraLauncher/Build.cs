@@ -3,7 +3,11 @@
     internal class Build
     {
         internal const string ClientExecutable = "FortniteClient-Win64-Shipping.exe";
+#if !NO_EGL
+        internal const string ClientArguments = "";
+#else
         internal const string ClientArguments = "-epicapp=Fortnite -epicenv=Prod -epiclocale=en-us -epicportal";
+#endif
 
         internal const string LauncherNative = "AuroraNative.dll";
         internal const string LauncherUri = "https://aurorafn.dev";

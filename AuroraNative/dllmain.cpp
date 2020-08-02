@@ -1,14 +1,15 @@
-#include <Windows.h>
+#include "pch.h"
 
 #include "util.h"
-#include "curl.h"
+#include "hooks.h"
 
 VOID Main() {
-//#ifdef VERBOSE
     Util::InitConsole();
-//#endif
 
-    InitCurl();
+    printf("Aurora, made with <3 by Cyuubi and Slushia.\n");
+    printf("Discord: https://discord.gg/AuroraFN\n\n");
+
+    InitHooks();
 }
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved) {

@@ -42,12 +42,7 @@ namespace AuroraLauncher.Providers
                 "Epic\\UnrealEngineLauncher\\LauncherInstalled.dat");
 
             if (!File.Exists(path))
-            {
-                return new Installed()
-                {
-                    InstallationList = new Installed.Installation[0]
-                };
-            }
+                return new Installed();
             else
                 return JsonConvert.DeserializeObject<Installed>(File.ReadAllText(path));
         }

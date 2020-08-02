@@ -1,10 +1,6 @@
-#ifndef UTIL_H
-#define UTIL_H
+#pragma once
 
-#include <Windows.h>
-#include <inttypes.h>
-#include <psapi.h>
-#include <cstdio>
+#include "pch.h"
 
 class Util {
 private:
@@ -46,5 +42,3 @@ public:
         return FindPattern(info.lpBaseOfDll, info.SizeOfImage, lpPattern, lpMask);
     }
 };
-
-#endif // UTIL_H

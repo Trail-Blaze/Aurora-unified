@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "hook.h"
 
 #define XIP Rip
@@ -9,11 +10,11 @@ PVOID VHook::hHandle = nullptr;
 
 DWORD VHook::dwProtect = 0;
 
-BOOL VHook::Hook(uintptr_t pTarget = -1, uintptr_t pDetour = -1)
+BOOL VHook::Hook(uintptr_t pTarget = 0, uintptr_t pDetour = 0)
 {
-	if (pTarget != -1)
+	if (pTarget != 0)
 		VHook::pTarget = pTarget;
-	if (pDetour != -1)
+	if (pDetour != 0)
 		VHook::pDetour = pDetour;
 
 	if (IsSamePage((const uint8_t*)pTarget, (const uint8_t*)pDetour))
