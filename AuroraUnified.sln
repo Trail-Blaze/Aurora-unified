@@ -7,8 +7,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AuroraNative", "AuroraNativ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuroraLauncher", "AuroraLauncher\AuroraLauncher.csproj", "{C6D5E15A-5A85-4F00-BECF-854A4A54B1EC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuroraServer", "AuroraServer\AuroraServer.csproj", "{78AE5454-2195-4FF4-9E95-74F34683A924}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,14 +27,6 @@ Global
 		{C6D5E15A-5A85-4F00-BECF-854A4A54B1EC}.Release|Any CPU.ActiveCfg = Release|x64
 		{C6D5E15A-5A85-4F00-BECF-854A4A54B1EC}.Release|x64.ActiveCfg = Release|x64
 		{C6D5E15A-5A85-4F00-BECF-854A4A54B1EC}.Release|x64.Build.0 = Release|x64
-		{78AE5454-2195-4FF4-9E95-74F34683A924}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{78AE5454-2195-4FF4-9E95-74F34683A924}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{78AE5454-2195-4FF4-9E95-74F34683A924}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{78AE5454-2195-4FF4-9E95-74F34683A924}.Debug|x64.Build.0 = Debug|Any CPU
-		{78AE5454-2195-4FF4-9E95-74F34683A924}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{78AE5454-2195-4FF4-9E95-74F34683A924}.Release|Any CPU.Build.0 = Release|Any CPU
-		{78AE5454-2195-4FF4-9E95-74F34683A924}.Release|x64.ActiveCfg = Release|Any CPU
-		{78AE5454-2195-4FF4-9E95-74F34683A924}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

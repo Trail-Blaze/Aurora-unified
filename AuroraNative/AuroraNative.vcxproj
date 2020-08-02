@@ -94,7 +94,7 @@ xcopy "$(TargetPath)" "$(SolutionDir)Build\" /F /I /R /Y</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="build.h" />
-    <ClInclude Include="hooks.h" />
+    <ClInclude Include="curl.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="string.hpp" />
     <ClInclude Include="url.hpp" />

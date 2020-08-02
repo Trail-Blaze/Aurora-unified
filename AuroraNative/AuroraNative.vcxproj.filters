@@ -36,7 +36,7 @@
     <ClInclude Include="hook.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hooks.h">
+    <ClInclude Include="curl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

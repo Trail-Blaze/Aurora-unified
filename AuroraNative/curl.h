@@ -96,7 +96,7 @@ inline LONG CurlEasySetopt(LPVOID lpContext, INT iTag, ...) {
     return result;
 }
 
-VOID InitHooks() {
+VOID InitCurl() {
     auto pCurlEasySetoptAddress = Util::FindPattern("\x89\x54\x24\x10\x4C\x89\x44\x24\x18\x4C\x89\x4C\x24\x20\x48\x83\xEC\x28\x48\x85\xC9\x75\x08\x8D\x41\x2B\x48\x83\xC4\x28\xC3\x4C", "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
     if (!pCurlEasySetoptAddress) {
         printf("Finding pattern for CurlEasySetopt has failed, exiting immediately!\n");
