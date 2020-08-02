@@ -334,7 +334,7 @@ namespace AuroraLauncher
                 return;
             }
 
-            var arguments = $"-AUTH_LOGIN={Configuration.Email} -AUTH_PASSWORD={Configuration.Password} -AUTH_TYPE=epic " + Configuration.Arguments;
+            var arguments = $"-AUTH_LOGIN={Configuration.Email} -AUTH_PASSWORD={Configuration.Password} -AUTH_TYPE=epic {Configuration.Arguments}";
 
             if (_clientAnticheat == 0) // None
                 arguments += $" {Build.ClientArguments} -noeac -nobe -fltoken=none";
@@ -373,7 +373,7 @@ namespace AuroraLauncher
 
             reader.Start();
 #else
-            Helper.InjectDll(_clientProcess.Id, Build.LauncherNative);
+            Helper.InjectDll(_clientProcess.Id, nativePath);
 #endif // NATIVE
         }
 
