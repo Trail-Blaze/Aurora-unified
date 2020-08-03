@@ -30,12 +30,7 @@ namespace AuroraLauncher
 #if GUI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            // Check if -NOSTALGIA exists in args (regardless of case) to run the old GUI.
-            if (!formattedArguments.ToUpper().Contains("-NOSTALGIA"))
-                Application.Run(new Gui());
-            else
-                Application.Run(new OldGui());
+            Application.Run(new Gui(formattedArguments));
 #else
             // Check if -FORCEBE exists in args (regardless of case) to force BattlEye.
             if (formattedArguments.ToUpper().Contains("-FORCEBE"))

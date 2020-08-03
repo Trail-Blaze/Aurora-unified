@@ -14,6 +14,8 @@ namespace AuroraLauncher
 {
     partial class Gui : MaterialForm
     {
+        #region Field Region
+
         MaterialSkinManager _skinManager;
 
         public Configuration Configuration;
@@ -33,7 +35,11 @@ namespace AuroraLauncher
         /// </summary>
         int _clientAnticheat = 1; // Forced to BE, until added into Settings.
 
-        public Gui()
+        #endregion
+
+        #region Constructor Region
+
+        public Gui(string formattedArguments = "")
         {
             InitializeComponent();
 
@@ -70,6 +76,10 @@ namespace AuroraLauncher
             CheckUpdates();
 #endif
         }
+
+        #endregion
+
+        #region Method Region
 
         delegate void SetOnlineTextDelegate(string text);
 
@@ -200,21 +210,6 @@ namespace AuroraLauncher
                 materialRaisedButtonPasswordView.Text = "Show";
             else
                 materialRaisedButtonPasswordView.Text = "Hide";
-        }
-
-        void DiscordClick()
-        {
-            Process.Start("https://discord.gg/AuroraFN");
-        }
-
-        private void pictureBoxDiscord_Click(object sender, EventArgs e)
-        {
-            DiscordClick();
-        }
-
-        private void materialFlatButtonDiscord_Click(object sender, EventArgs e)
-        {
-            DiscordClick();
         }
 
         public static bool IsValidPath(string path)
@@ -381,8 +376,7 @@ namespace AuroraLauncher
         {
             var text =
                 "Aurora, made with <3 by Cyuubi and Slushia." + "\n\n" +
-                "If you purchased this software, you have been scammed. Please, immediately request a refund." + "\n\n" +
-                "Please join our Discord server if you experience any problems!";
+                "If you purchased this software, you have been scammed. Please, immediately request a refund.";
 
             MessageBox.Show(text);
         }
@@ -397,5 +391,7 @@ namespace AuroraLauncher
             _settings.Location = Location;
             _settings.ShowDialog();
         }
+
+        #endregion
     }
 }

@@ -36,12 +36,9 @@
             this.materialLabelPassword = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabelEmail = new MaterialSkin.Controls.MaterialLabel();
             this.materialLabelUpdate = new MaterialSkin.Controls.MaterialLabel();
-            this.materialFlatButtonDiscord = new MaterialSkin.Controls.MaterialFlatButton();
-            this.pictureBoxDiscord = new System.Windows.Forms.PictureBox();
             this.materialLabelOnline = new MaterialSkin.Controls.MaterialLabel();
             this.materialFlatButtonInfo = new MaterialSkin.Controls.MaterialFlatButton();
             this.materialRaisedButtonPasswordView = new MaterialSkin.Controls.MaterialRaisedButton();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDiscord)).BeginInit();
             this.SuspendLayout();
             // 
             // materialFlatButtonSettings
@@ -145,33 +142,6 @@
             this.materialLabelUpdate.Text = "You must update Aurora Launcher to launch Fortnite.";
             this.materialLabelUpdate.Visible = false;
             // 
-            // materialFlatButtonDiscord
-            // 
-            this.materialFlatButtonDiscord.AutoSize = true;
-            this.materialFlatButtonDiscord.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.materialFlatButtonDiscord.Depth = 0;
-            this.materialFlatButtonDiscord.Location = new System.Drawing.Point(459, 140);
-            this.materialFlatButtonDiscord.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.materialFlatButtonDiscord.MouseState = MaterialSkin.MouseState.HOVER;
-            this.materialFlatButtonDiscord.Name = "materialFlatButtonDiscord";
-            this.materialFlatButtonDiscord.Primary = false;
-            this.materialFlatButtonDiscord.Size = new System.Drawing.Size(69, 36);
-            this.materialFlatButtonDiscord.TabIndex = 8;
-            this.materialFlatButtonDiscord.Text = "Discord";
-            this.materialFlatButtonDiscord.UseVisualStyleBackColor = true;
-            this.materialFlatButtonDiscord.Click += new System.EventHandler(this.materialFlatButtonDiscord_Click);
-            // 
-            // pictureBoxDiscord
-            // 
-            this.pictureBoxDiscord.BackgroundImage = global::AuroraLauncher.Properties.Resources.Discord_Logo_Color;
-            this.pictureBoxDiscord.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBoxDiscord.Location = new System.Drawing.Point(412, 137);
-            this.pictureBoxDiscord.Name = "pictureBoxDiscord";
-            this.pictureBoxDiscord.Size = new System.Drawing.Size(40, 40);
-            this.pictureBoxDiscord.TabIndex = 9;
-            this.pictureBoxDiscord.TabStop = false;
-            this.pictureBoxDiscord.Click += new System.EventHandler(this.pictureBoxDiscord_Click);
-            // 
             // materialLabelOnline
             // 
             this.materialLabelOnline.AutoSize = true;
@@ -223,8 +193,6 @@
             this.Controls.Add(this.materialRaisedButtonPasswordView);
             this.Controls.Add(this.materialFlatButtonInfo);
             this.Controls.Add(this.materialLabelOnline);
-            this.Controls.Add(this.pictureBoxDiscord);
-            this.Controls.Add(this.materialFlatButtonDiscord);
             this.Controls.Add(this.materialLabelUpdate);
             this.Controls.Add(this.materialSingleLineTextFieldPassword);
             this.Controls.Add(this.materialLabelPassword);
@@ -237,7 +205,6 @@
             this.Name = "Gui";
             this.Sizable = false;
             this.Text = "Aurora Launcher";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDiscord)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -252,8 +219,6 @@
         private MaterialSkin.Controls.MaterialLabel materialLabelPassword;
         private MaterialSkin.Controls.MaterialLabel materialLabelEmail;
         private MaterialSkin.Controls.MaterialLabel materialLabelUpdate;
-        private MaterialSkin.Controls.MaterialFlatButton materialFlatButtonDiscord;
-        private System.Windows.Forms.PictureBox pictureBoxDiscord;
         private MaterialSkin.Controls.MaterialLabel materialLabelOnline;
         private MaterialSkin.Controls.MaterialFlatButton materialFlatButtonInfo;
         private MaterialSkin.Controls.MaterialRaisedButton materialRaisedButtonPasswordView;

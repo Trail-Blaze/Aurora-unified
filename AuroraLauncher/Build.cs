@@ -10,7 +10,7 @@
 #endif
 
         internal const string LauncherNative = "AuroraNative.dll";
-        internal const string LauncherUri = "https://aurorafn.dev";
+        internal const string LauncherUri = "http://localhost";
 
         // TODO: Figure out how to generate FLToken's without hardcoding them.
         internal const string BeToken = "f7b9gah4h5380d10f721dd6a";
